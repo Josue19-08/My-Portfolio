@@ -1,5 +1,5 @@
 export type TechItem = {
-  name: string // No se traduce el nombre de la tecnología
+  name: string 
   icon: string
   level: number
 }
@@ -20,6 +20,9 @@ export const techStack: TechStack = {
     { name: "HTML/CSS", icon: "🌐", level: 98 },
     { name: "Redux", icon: "🔄", level: 85 },
     { name: "Framer Motion", icon: "🎭", level: 80 },
+    { name: "Ionic", icon: "📱", level: 50 },
+    { name: "Angular", icon: "🅰️", level: 50 },
+    { name: "Bootstrap", icon: "🎀", level: 30 },
   ],
   backend: [
     { name: "Node.js", icon: "🟢", level: 90 },
@@ -28,8 +31,12 @@ export const techStack: TechStack = {
     { name: "PostgreSQL", icon: "🐘", level: 75 },
     { name: "GraphQL", icon: "⚡", level: 70 },
     { name: "REST API", icon: "🔌", level: 95 },
-    { name: "Firebase", icon: "🔥", level: 80 },
     { name: "Prisma", icon: "📊", level: 75 },
+    { name: ".NET", icon: "🧱", level: 85 },
+    { name: "Java", icon: "☕", level: 85 },
+    { name: "Spring Boot", icon: "🌱", level: 85 },
+    { name: "SQL", icon: "💾", level: 75 },
+    { name: "Elasticsearch", icon: "🔍", level: 20 },
   ],
   tools: [
     { name: "Git", icon: "🔄", level: 95 },
@@ -42,3 +49,5 @@ export const techStack: TechStack = {
     { name: "VS Code", icon: "💻", level: 95 },
   ],
 }
+
+
