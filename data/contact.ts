@@ -1,20 +1,20 @@
 export type ContactInfo = {
   email: {
-    address: string // No se traduce el email
+    address: string 
     description: {
       en: string
       es: string
     }
   }
   phone: {
-    number: string // No se traduce el número
+    number: string 
     description: {
       en: string
       es: string
     }
   }
   location: {
-    place: string // Se puede traducir el nombre del lugar
+    place: string 
     description: {
       en: string
       es: string
@@ -95,30 +95,30 @@ export type ContactInfo = {
 
 export const contactInfo: ContactInfo = {
   email: {
-    address: "josue.araya@example.com",
+    address: "josuemarin2009@hotmail.com",
     description: {
       en: "Feel free to email me anytime!",
       es: "¡No dudes en enviarme un correo en cualquier momento!",
     },
   },
   phone: {
-    number: "+1 (123) 456-7890",
+    number: "+506 8395-5394",
     description: {
       en: "Available Monday-Friday, 9AM-5PM",
       es: "Disponible de lunes a viernes, 9AM-5PM",
     },
   },
   location: {
-    place: "San José, Costa Rica",
+    place: "Turrialba, Cartago, Costa Rica",
     description: {
       en: "Available for remote work worldwide",
       es: "Disponible para trabajo remoto en todo el mundo",
     },
   },
   socialLinks: {
-    github: "https://github.com/username",
-    linkedin: "https://linkedin.com/in/username",
-    twitter: "https://twitter.com/username",
+    github: "https://github.com/Josue19-08",
+    linkedin: "https://www.linkedin.com/in/josue-araya-marin-336975245/",
+    twitter: "https://x.com/josuearayamarin",
   },
   formLabels: {
     name: {
