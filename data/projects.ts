@@ -8,7 +8,7 @@ export type Project = {
     en: string
     es: string
   }
-  technologies: string[] // No se traducen los nombres de tecnologías
+  technologies: string[] 
   github: string
   demo: string
   image: string
@@ -16,63 +16,64 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "project1",
+    id: "galaxy-smart-wallet",
     title: {
-      en: "E-commerce Platform",
-      es: "Plataforma de Comercio Electrónico",
+      en: "Galaxy Smart Wallet",
+      es: "Galaxy Smart Wallet",
     },
     description: {
-      en: "A full-featured e-commerce platform with product management, cart functionality, and payment processing. Includes responsive design and user authentication.",
-      es: "Una plataforma de comercio electrónico completa con gestión de productos, funcionalidad de carrito y procesamiento de pagos. Incluye diseño responsivo y autenticación de usuarios.",
+      en: "Galaxy Smart Wallet is a decentralized wallet built on Stellar, designed for secure and on-chain asset management. It offers a seamless and user-friendly interface to interact with the Stellar blockchain.",
+      es: "Galaxy Smart Wallet es una billetera descentralizada construida sobre Stellar, diseñada para una gestión segura de activos en cadena. Ofrece una interfaz fluida y fácil de usar para interactuar con la blockchain de Stellar.",
     },
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "MongoDB", "Stripe"],
-    github: "https://github.com/username/project1",
-    demo: "https://project1-demo.com",
-    image: "/dark-blue-ecommerce.png",
+    technologies: ["Next.js", "TailwindCSS", "Zustand", "Framer Motion", "Stellar SDK", "TypeScript"],
+    github: "https://github.com/Galaxy-KJ/galaxy-smart-wallet",
+    demo: "",
+    image: "images/galaxy-banner.png",
   },
   {
-    id: "project2",
+    id: "aurora-language-platform",
     title: {
-      en: "Task Management App",
-      es: "Aplicación de Gestión de Tareas",
+      en: "AURORA.LA - Language Learning Platform",
+      es: "AURORA.LA - Plataforma de Aprendizaje de Idiomas",
     },
     description: {
-      en: "A collaborative task management application with real-time updates and team collaboration features. Includes drag-and-drop interface and progress tracking.",
-      es: "Una aplicación colaborativa de gestión de tareas con actualizaciones en tiempo real y funciones de colaboración en equipo. Incluye interfaz de arrastrar y soltar y seguimiento de progreso.",
+      en: "AURORA.LA is an innovative on-chain, AI-powered language learning platform that offers personalized and interactive learning experiences. The project integrates smart contracts and blockchain logic with a dynamic and modern frontend for users to practice, learn, and evolve their language skills in a gamified way.",
+      es: "AURORA.LA es una innovadora plataforma de aprendizaje de idiomas impulsada por IA y tecnología on-chain. Ofrece experiencias de aprendizaje personalizadas e interactivas, integrando contratos inteligentes y lógica blockchain con un frontend moderno y dinámico que permite a los usuarios practicar, aprender y avanzar en sus habilidades lingüísticas de forma gamificada.",
     },
-    technologies: ["Next.js", "Node.js", "MongoDB", "Socket.io", "Redux", "Framer Motion"],
-    github: "https://github.com/username/project2",
-    demo: "https://project2-demo.com",
-    image: "/dark-dashboard-tasks.png",
+    technologies: ["Next.js", "TailwindCSS", "Node.js", "PostgreSQL", "Docker", "Rust", "Stellar", "TypeScript"],
+    github: "https://github.com/AURORALAOrg",
+    demo: "",
+    image: "images/aurora-banner.png",
   },
   {
-    id: "project3",
+    id: "offer-hub",
     title: {
-      en: "Real Estate Marketplace",
-      es: "Mercado Inmobiliario",
+      en: "OFFER-HUB - Decentralized Freelance Platform",
+      es: "OFFER-HUB - Plataforma Freelance Descentralizada",
     },
     description: {
-      en: "A platform for listing and searching real estate properties with advanced filtering and map integration. Features virtual tours and mortgage calculator.",
-      es: "Una plataforma para listar y buscar propiedades inmobiliarias con filtrado avanzado e integración de mapas. Incluye tours virtuales y calculadora de hipotecas.",
+      en: "OFFER-HUB is a decentralized freelance platform leveraging blockchain, cryptocurrency payments, and smart contracts to connect freelancers and clients globally. Designed to remove intermediaries, lower fees, and empower seamless collaboration in areas such as design, programming, writing, and consulting.",
+      es: "OFFER-HUB es una plataforma freelance descentralizada que utiliza blockchain, pagos con criptomonedas y contratos inteligentes para conectar freelancers y clientes a nivel global. Está diseñada para eliminar intermediarios, reducir comisiones y facilitar la colaboración en áreas como diseño, programación, redacción y consultoría.",
     },
-    technologies: ["Vue.js", "Express", "PostgreSQL", "Google Maps API", "AWS", "Three.js"],
-    github: "https://github.com/username/project3",
-    demo: "https://project3-demo.com",
-    image: "/luxury-real-estate-dark.png",
+    technologies: ["Node.js", "pnpm", "Docker", "Docker Compose", "Hasura", "Rust", "TypeScript"],
+    github: "https://github.com/OFFER-HUB/offer-hub",
+    demo: "",
+    image: "images/offer-hub-banner.png",
   },
   {
-    id: "project4",
+    id: "aqua-stark",
     title: {
-      en: "AI Content Generator",
-      es: "Generador de Contenido con IA",
+      en: "Aqua Stark - Web3 Aquarium Game",
+      es: "Aqua Stark - Juego Acuario Web3",
     },
     description: {
-      en: "An AI-powered application that generates various types of content including articles, social media posts, and marketing copy based on user prompts.",
-      es: "Una aplicación impulsada por IA que genera varios tipos de contenido, incluyendo artículos, publicaciones en redes sociales y textos de marketing basados en indicaciones del usuario.",
+      en: "Aqua Stark is a Web3 game on StarkNet where players can collect, raise, and evolve fish in a decentralized ecosystem. It features fish breeding, a marketplace, aquarium customization, and special events.",
+      es: "Aqua Stark es un juego Web3 en StarkNet donde los jugadores pueden coleccionar, criar y evolucionar peces dentro de un ecosistema descentralizado. Incluye crianza de peces, mercado, personalización del acuario y eventos especiales.",
     },
-    technologies: ["React", "Python", "FastAPI", "OpenAI", "TensorFlow", "AWS Lambda"],
-    github: "https://github.com/username/project4",
-    demo: "https://project4-demo.com",
-    image: "/futuristic-content-hub.png",
+    technologies: ["React", "Vite", "TailwindCSS", "Dojo Engine", "Cairo", "StarkNet", "TypeScript"],
+    github: "https://github.com/AquaStark/Aqua-Stark",
+    demo: "",
+    image: "images/aqua-stark-banner.png",
   },
 ]
+
