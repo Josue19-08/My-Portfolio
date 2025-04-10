@@ -5,7 +5,7 @@ export type SocialLink = {
 }
 
 export type HomeData = {
-  name: string // No se traduce el nombre propio
+  name: string 
   subtitle: {
     en: string
     es: string
@@ -49,11 +49,11 @@ export const homeData: HomeData = {
     },
   },
   socialLinks: [
-    { icon: "github", url: "https://github.com/username", label: "GitHub" },
-    { icon: "linkedin", url: "https://linkedin.com/in/username", label: "LinkedIn" },
-    { icon: "twitter", url: "https://twitter.com/username", label: "Twitter" },
-    { icon: "send", url: "https://t.me/username", label: "Telegram" },
-    { icon: "phone", url: "https://wa.me/123456789", label: "WhatsApp" },
+    { icon: "github", url: "https://github.com/Josue19-08", label: "GitHub" },
+    { icon: "linkedin", url: "https://www.linkedin.com/in/josue-araya-marin-336975245/", label: "LinkedIn" },
+    { icon: "twitter", url: "https://x.com/josuearayamarin", label: "Twitter" },
+    { icon: "send", url: "https://t.me/Josue1908Cr", label: "Telegram" },
+    { icon: "phone", url: "https://wa.link/5o4qrw", label: "WhatsApp" },
   ],
   profileImage: "/images/josue.jpeg",
 }
