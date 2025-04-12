@@ -10,52 +10,53 @@ import { homeData } from "@/data/home"
 
 export function Home() {
   const { t, language } = useLanguage()
-  const [text, setText] = useState("")
+  const [terminalText, setTerminalText] = useState("")
   const [lineIndex, setLineIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
   const [showCursor, setShowCursor] = useState(true)
 
-  const lines = [t("home.terminal.line1"), t("home.terminal.line2"), t("home.terminal.line3"), t("home.terminal.line4")]
+  const lines = [
+    t("home.terminal.line1"),
+    t("home.terminal.line2"),
+    t("home.terminal.line3"),
+    t("home.terminal.line4"),
+    t("home.terminal.line5"),
+  ]
+
+  useEffect(() => {
+    // Reset animation on language change
+    setTerminalText("")
+    setLineIndex(0)
+    setCharIndex(0)
+  }, [language])
 
   useEffect(() => {
     if (lineIndex < lines.length) {
       const currentLine = lines[lineIndex]
-
       if (charIndex < currentLine.length) {
         const timer = setTimeout(() => {
-          setText((prev) => prev + currentLine[charIndex])
-          setCharIndex(charIndex + 1)
+          setTerminalText((prev) => prev + currentLine[charIndex])
+          setCharIndex((prev) => prev + 1)
         }, 50)
-
         return () => clearTimeout(timer)
       } else {
-        setText(text + "\n")
-        setLineIndex(lineIndex + 1)
+        setTerminalText((prev) => prev + "\n")
+        setLineIndex((prev) => prev + 1)
         setCharIndex(0)
       }
     }
-  }, [charIndex, lineIndex, text])
+  }, [charIndex, lineIndex, lines])
 
   useEffect(() => {
     const cursorInterval = setInterval(() => {
       setShowCursor((prev) => !prev)
     }, 500)
-
     return () => clearInterval(cursorInterval)
   }, [])
 
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById("about")
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
-  const scrollToProjects = () => {
-    const projectsSection = document.getElementById("projects")
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: "smooth" })
-    }
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id)
+    if (section) section.scrollIntoView({ behavior: "smooth" })
   }
 
   const getIconComponent = (iconName: string) => {
@@ -77,12 +78,12 @@ export function Home() {
 
   return (
     <div className="relative w-full min-h-[90vh] flex flex-col justify-center">
-      {/* Efectos de luz mejorados */}
+      {/* Luces */}
       <div className="hero-glow absolute top-[10%] left-[15%] w-[300px] h-[300px] opacity-50"></div>
       <div className="hero-glow orange absolute bottom-[20%] right-[15%] w-[250px] h-[250px] opacity-40"></div>
       <div className="hero-glow blue absolute top-[40%] right-[25%] w-[200px] h-[200px] opacity-30"></div>
 
-      {/* Elementos decorativos */}
+      {/* Iconos decorativos */}
       <motion.div
         className="absolute top-[15%] left-[10%] text-primary/20 hidden lg:block"
         initial={{ opacity: 0, scale: 0 }}
@@ -109,6 +110,7 @@ export function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
+            {/* Nombre + foto */}
             <div className="flex items-center gap-6 mb-2">
               <motion.div
                 initial={{ scale: 0, rotate: -20 }}
@@ -145,6 +147,7 @@ export function Home() {
               </div>
             </div>
 
+            {/* Descripción + redes */}
             <motion.p
               className="text-xl text-muted-foreground text-center lg:text-left max-w-lg"
               initial={{ opacity: 0, y: 20 }}
@@ -154,7 +157,6 @@ export function Home() {
               {homeData.description[language]}
             </motion.p>
 
-            {/* Redes sociales - ahora encima de los botones */}
             <motion.div
               className="flex gap-4 mb-2"
               initial={{ opacity: 0, y: 20 }}
@@ -180,6 +182,7 @@ export function Home() {
               ))}
             </motion.div>
 
+            {/* Botones */}
             <motion.div
               className="flex gap-4 mt-2"
               initial={{ opacity: 0, y: 20 }}
@@ -189,17 +192,23 @@ export function Home() {
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/80 text-white hero-button text-lg px-8 py-6"
-                onClick={scrollToAbout}
+                onClick={() => scrollToSection("about")}
               >
                 {homeData.buttons.about[language]}
               </Button>
 
-              <Button size="lg" variant="outline" className="hero-button text-lg px-8 py-6" onClick={scrollToProjects}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="hero-button text-lg px-8 py-6"
+                onClick={() => scrollToSection("projects")}
+              >
                 {homeData.buttons.projects[language]}
               </Button>
             </motion.div>
           </motion.div>
 
+          {/* Terminal animada */}
           <motion.div
             className="order-1 lg:order-2"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -214,19 +223,23 @@ export function Home() {
               </div>
               <div className="terminal-content min-h-[300px]">
                 <pre>
-                  {text.split("\n").map((line, i) => (
-                    <div key={i} className="mb-2">
-                      {i === 0 && <span className="text-green-500">$ </span>}
-                      {i > 0 && <span className="text-green-500">&gt; </span>}
-                      {line}
-                      {lineIndex === i && charIndex === line.length && showCursor && <span className="cursor"></span>}
-                    </div>
-                  ))}
+                  {terminalText
+                    .split("\n")
+                    .map((line, i) => {
+                      const clean = line.trim()
+                      if (!clean) return null
+                      return (
+                        <div key={`line-${i}-${clean.slice(0, 10)}`} className="mb-2">
+                          {i === 0 ? <span className="text-green-500">$ </span> : <span className="text-green-500">&gt; </span>}
+                          {line}
+                          {lineIndex === i && charIndex === line.length && showCursor && <span className="cursor"></span>}
+                        </div>
+                      )
+                    })}
                 </pre>
               </div>
             </div>
 
-            {/* Elementos decorativos alrededor de la terminal */}
             <motion.div
               className="flex justify-center mt-8 gap-6"
               initial={{ opacity: 0 }}
@@ -242,7 +255,7 @@ export function Home() {
         </div>
       </div>
 
-      {/* Indicador de scroll mejorado */}
+      {/* Scroll abajo */}
       <motion.div
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 10 }}
