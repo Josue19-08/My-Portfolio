@@ -1,13 +1,12 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef } from "react"
+import { motion, useInView, AnimatePresence } from "framer-motion"
+import { z } from "zod"
+
 import { useLanguage } from "@/components/language/language-provider"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
+import { contactInfo } from "@/data/contact"
 import {
   Mail,
   Phone,
@@ -23,11 +22,13 @@ import {
   Clock,
   MessageSquare,
 } from "lucide-react"
-import { motion, useInView, AnimatePresence } from "framer-motion"
-import { contactInfo } from "@/data/contact"
-import { z } from "zod"
 
-// Esquema de validación
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+
+// Validación del formulario
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -58,6 +59,22 @@ export function Contact() {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.1 })
+
+  const iconMap = {
+    github: Github,
+    linkedin: Linkedin,
+    twitter: Twitter,
+    send: Send,
+    phone: Phone,
+  }
+
+  const socialLinks = [
+    { icon: "github", url: contactInfo.socialLinks.github, label: "GitHub" },
+    { icon: "linkedin", url: contactInfo.socialLinks.linkedin, label: "LinkedIn" },
+    { icon: "twitter", url: contactInfo.socialLinks.twitter, label: "Twitter" },
+    { icon: "send", url: contactInfo.socialLinks.send, label: "Telegram" },
+    { icon: "phone", url: contactInfo.socialLinks.phone, label: "WhatsApp" },
+  ]
 
   const validateField = (name: keyof FormData, value: string) => {
     try {
@@ -431,39 +448,23 @@ export function Contact() {
                 <div className="pt-4 border-t border-primary/10">
                   <h3 className="font-medium mb-4">{contactInfo.sections.info.connect[language]}</h3>
                   <div className="flex justify-center gap-4">
-                    <motion.a
-                      href={contactInfo.socialLinks.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-background/80 border border-primary/20 p-3 rounded-full hover:bg-primary/10 transition-colors"
-                      whileHover={{ y: -5, scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      aria-label="GitHub"
-                    >
-                      <Github className="h-5 w-5" />
-                    </motion.a>
-                    <motion.a
-                      href={contactInfo.socialLinks.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-background/80 border border-primary/20 p-3 rounded-full hover:bg-primary/10 transition-colors"
-                      whileHover={{ y: -5, scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      aria-label="LinkedIn"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </motion.a>
-                    <motion.a
-                      href={contactInfo.socialLinks.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-background/80 border border-primary/20 p-3 rounded-full hover:bg-primary/10 transition-colors"
-                      whileHover={{ y: -5, scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      aria-label="Twitter"
-                    >
-                      <Twitter className="h-5 w-5" />
-                    </motion.a>
+                    {socialLinks.map(({ icon, url, label }) => {
+                      const Icon = iconMap[icon as keyof typeof iconMap]
+                      return (
+                        <motion.a
+                          key={label}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-background/80 border border-primary/20 p-3 rounded-full hover:bg-primary/10 transition-colors"
+                          whileHover={{ y: -5, scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          aria-label={label}
+                        >
+                          <Icon className="h-5 w-5" />
+                        </motion.a>
+                      )
+                    })}
                   </div>
                 </div>
               </CardContent>
