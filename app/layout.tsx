@@ -24,7 +24,12 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Josué Araya | Software Developer",
   description: "Portfolio personal de Josué Araya, Software Developer",
-    generator: 'v0.dev'
+  generator: "v0.dev",
+  icons: {
+    icon: "/images/logo.png",            
+    shortcut: "/images/logo.png",       
+    apple: "/images/logo.png",           
+  },
 }
 
 export default function RootLayout({
@@ -33,7 +38,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${montserrat.variable} ${roboto.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${montserrat.variable} ${roboto.variable}`}
+    >
       <body className={roboto.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <LanguageProvider>{children}</LanguageProvider>
