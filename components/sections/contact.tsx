@@ -232,187 +232,188 @@ export function Contact() {
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 lg:grid-cols-12 gap-8"
         >
-          {/* Formulario de contacto */}
-          <motion.div variants={itemVariants} className="lg:col-span-7">
-            <Card className="border border-primary/20 bg-background/50 backdrop-blur-sm h-full overflow-hidden">
-              {/* Barra superior decorativa */}
-              <div className="h-1 bg-gradient-to-r from-primary via-secondary to-primary"></div>
+          {/* 
+<Formulario de contacto>
+<motion.div variants={itemVariants} className="lg:col-span-7">
+  <Card className="border border-primary/20 bg-background/50 backdrop-blur-sm h-full overflow-hidden">
+    <div className="h-1 bg-gradient-to-r from-primary via-secondary to-primary"></div>
 
-              <CardHeader className="pb-0">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-primary/10 p-2 rounded-full">
-                    <MessageSquare className="h-5 w-5 text-primary" />
-                  </div>
-                  <CardTitle>{contactInfo.sections.form.title[language]}</CardTitle>
-                </div>
-                <CardDescription>{contactInfo.sections.form.description[language]}</CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-sm font-medium flex items-center gap-1">
-                        {contactInfo.formLabels.name[language]} <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        placeholder={contactInfo.formLabels.placeholders.name[language]}
-                        value={formData.name}
-                        onChange={handleChange}
-                        className={`transition-all duration-300 ${errors.name ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-                        disabled={isSubmitting}
-                      />
-                      {errors.name && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="text-red-500 text-xs mt-1"
-                        >
-                          {errors.name}
-                        </motion.p>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-sm font-medium flex items-center gap-1">
-                        {contactInfo.formLabels.email[language]} <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder={contactInfo.formLabels.placeholders.email[language]}
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`transition-all duration-300 ${errors.email ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-                        disabled={isSubmitting}
-                      />
-                      {errors.email && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="text-red-500 text-xs mt-1"
-                        >
-                          {errors.email}
-                        </motion.p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="subject" className="text-sm font-medium flex items-center gap-1">
-                      {contactInfo.formLabels.subject[language]} <span className="text-red-500">*</span>
-                    </label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      placeholder={contactInfo.formLabels.placeholders.subject[language]}
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className={`transition-all duration-300 ${errors.subject ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-                      disabled={isSubmitting}
-                    />
-                    {errors.subject && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-500 text-xs mt-1"
-                      >
-                        {errors.subject}
-                      </motion.p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="text-sm font-medium flex items-center gap-1">
-                      {contactInfo.formLabels.message[language]} <span className="text-red-500">*</span>
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder={contactInfo.formLabels.placeholders.message[language]}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className={`min-h-[180px] resize-none transition-all duration-300 ${errors.message ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-                      disabled={isSubmitting}
-                    />
-                    {errors.message && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-500 text-xs mt-1"
-                      >
-                        {errors.message}
-                      </motion.p>
-                    )}
-                  </div>
+    <CardHeader className="pb-0">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="bg-primary/10 p-2 rounded-full">
+          <MessageSquare className="h-5 w-5 text-primary" />
+        </div>
+        <CardTitle>{contactInfo.sections.form.title[language]}</CardTitle>
+      </div>
+      <CardDescription>{contactInfo.sections.form.description[language]}</CardDescription>
+    </CardHeader>
+    <CardContent className="pt-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label htmlFor="name" className="text-sm font-medium flex items-center gap-1">
+              {contactInfo.formLabels.name[language]} <span className="text-red-500">*</span>
+            </label>
+            <Input
+              id="name"
+              name="name"
+              placeholder={contactInfo.formLabels.placeholders.name[language]}
+              value={formData.name}
+              onChange={handleChange}
+              className={`transition-all duration-300 ${errors.name ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
+              disabled={isSubmitting}
+            />
+            {errors.name && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-500 text-xs mt-1"
+              >
+                {errors.name}
+              </motion.p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="email" className="text-sm font-medium flex items-center gap-1">
+              {contactInfo.formLabels.email[language]} <span className="text-red-500">*</span>
+            </label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder={contactInfo.formLabels.placeholders.email[language]}
+              value={formData.email}
+              onChange={handleChange}
+              className={`transition-all duration-300 ${errors.email ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
+              disabled={isSubmitting}
+            />
+            {errors.email && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-500 text-xs mt-1"
+              >
+                {errors.email}
+              </motion.p>
+            )}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="subject" className="text-sm font-medium flex items-center gap-1">
+            {contactInfo.formLabels.subject[language]} <span className="text-red-500">*</span>
+          </label>
+          <Input
+            id="subject"
+            name="subject"
+            placeholder={contactInfo.formLabels.placeholders.subject[language]}
+            value={formData.subject}
+            onChange={handleChange}
+            className={`transition-all duration-300 ${errors.subject ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
+            disabled={isSubmitting}
+          />
+          {errors.subject && (
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-xs mt-1"
+            >
+              {errors.subject}
+            </motion.p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="message" className="text-sm font-medium flex items-center gap-1">
+            {contactInfo.formLabels.message[language]} <span className="text-red-500">*</span>
+          </label>
+          <Textarea
+            id="message"
+            name="message"
+            placeholder={contactInfo.formLabels.placeholders.message[language]}
+            value={formData.message}
+            onChange={handleChange}
+            className={`min-h-[180px] resize-none transition-all duration-300 ${errors.message ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
+            disabled={isSubmitting}
+          />
+          {errors.message && (
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-xs mt-1"
+            >
+              {errors.message}
+            </motion.p>
+          )}
+        </div>
 
-                  <AnimatePresence mode="wait">
-                    {submitStatus === "idle" ? (
-                      <motion.div
-                        key="submit-button"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                      >
-                        <Button type="submit" className="w-full group" disabled={isSubmitting} size="lg">
-                          {isSubmitting ? (
-                            <>
-                              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                              {language === "en" ? "Sending..." : "Enviando..."}
-                            </>
-                          ) : (
-                            <>
-                              <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                              {contactInfo.formLabels.submit[language]}
-                            </>
-                          )}
-                        </Button>
-                      </motion.div>
-                    ) : submitStatus === "success" ? (
-                      <motion.div
-                        key="success-message"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        className="bg-green-500/10 border border-green-500/30 text-green-500 p-6 rounded-md flex items-center"
-                      >
-                        <CheckCircle className="h-6 w-6 mr-3 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-medium mb-1">
-                            {language === "en" ? "Message sent successfully!" : "¡Mensaje enviado con éxito!"}
-                          </h4>
-                          <p className="text-sm">
-                            {language === "en"
-                              ? "Thank you for reaching out. I'll get back to you as soon as possible."
-                              : "Gracias por contactarme. Te responderé lo antes posible."}
-                          </p>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="error-message"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        className="bg-red-500/10 border border-red-500/30 text-red-500 p-6 rounded-md flex items-center"
-                      >
-                        <AlertCircle className="h-6 w-6 mr-3 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-medium mb-1">
-                            {language === "en" ? "Error sending message" : "Error al enviar el mensaje"}
-                          </h4>
-                          <p className="text-sm">
-                            {language === "en"
-                              ? "There was an error sending your message. Please try again or contact me directly."
-                              : "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo o contáctame directamente."}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
+        <AnimatePresence mode="wait">
+          {submitStatus === "idle" ? (
+            <motion.div
+              key="submit-button"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Button type="submit" className="w-full group" disabled={isSubmitting} size="lg">
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    {language === "en" ? "Sending..." : "Enviando..."}
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    {contactInfo.formLabels.submit[language]}
+                  </>
+                )}
+              </Button>
+            </motion.div>
+          ) : submitStatus === "success" ? (
+            <motion.div
+              key="success-message"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-green-500/10 border border-green-500/30 text-green-500 p-6 rounded-md flex items-center"
+            >
+              <CheckCircle className="h-6 w-6 mr-3 flex-shrink-0" />
+              <div>
+                <h4 className="font-medium mb-1">
+                  {language === "en" ? "Message sent successfully!" : "¡Mensaje enviado con éxito!"}
+                </h4>
+                <p className="text-sm">
+                  {language === "en"
+                    ? "Thank you for reaching out. I'll get back to you as soon as possible."
+                    : "Gracias por contactarme. Te responderé lo antes posible."}
+                </p>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="error-message"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-red-500/10 border border-red-500/30 text-red-500 p-6 rounded-md flex items-center"
+            >
+              <AlertCircle className="h-6 w-6 mr-3 flex-shrink-0" />
+              <div>
+                <h4 className="font-medium mb-1">
+                  {language === "en" ? "Error sending message" : "Error al enviar el mensaje"}
+                </h4>
+                <p className="text-sm">
+                  {language === "en"
+                    ? "There was an error sending your message. Please try again or contact me directly."
+                    : "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo o contáctame directamente."}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </form>
+    </CardContent>
+  </Card>
+</motion.div>
+*/}
 
           {/* Información de contacto */}
           <motion.div variants={itemVariants} className="lg:col-span-5">
@@ -439,14 +440,16 @@ export function Contact() {
                   </h3>
                   <p className="text-sm text-muted-foreground">
                     {language === "en"
-                      ? "I'm currently available for freelance work and collaborations. My typical response time is within 24 hours."
-                      : "Actualmente estoy disponible para trabajos freelance y colaboraciones. Mi tiempo de respuesta típico es dentro de las 24 horas."}
+                      ? "I'm currently open to job opportunities, collaborations, or freelance work. I typically respond within 24 hours."
+                      : "Actualmente estoy disponible para oportunidades laborales, colaboraciones o trabajos freelance. Suelo responder en un plazo de 24 horas."}
                   </p>
                 </div>
 
                 {/* Redes sociales */}
                 <div className="pt-4 border-t border-primary/10">
-                  <h3 className="font-medium mb-4">{contactInfo.sections.info.connect[language]}</h3>
+                  <h3 className="font-medium mb-4">
+                    {contactInfo.sections.info.connect[language]}
+                  </h3>
                   <div className="flex justify-center gap-4">
                     {socialLinks.map(({ icon, url, label }) => {
                       const Icon = iconMap[icon as keyof typeof iconMap]
