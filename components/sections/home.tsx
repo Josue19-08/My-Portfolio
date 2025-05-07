@@ -216,29 +216,37 @@ export function Home() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <div className="terminal w-full max-w-2xl mx-auto lg:ml-auto">
-              <div className="terminal-header">
-                <div className="terminal-button red"></div>
-                <div className="terminal-button yellow"></div>
-                <div className="terminal-button green"></div>
-              </div>
-              <div className="terminal-content min-h-[300px]">
-                <pre>
-                  {terminalText
-                    .split("\n")
-                    .map((line, i) => {
-                      const clean = line.trim()
-                      if (!clean) return null
-                      return (
-                        <div key={`line-${i}-${clean.slice(0, 10)}`} className="mb-2">
-                          {i === 0 ? <span className="text-green-500">$ </span> : <span className="text-green-500">&gt; </span>}
-                          {line}
-                          {lineIndex === i && charIndex === line.length && showCursor && <span className="cursor"></span>}
-                        </div>
-                      )
-                    })}
-                </pre>
-              </div>
+  <div className="terminal-header">
+    <div className="terminal-button red"></div>
+    <div className="terminal-button yellow"></div>
+    <div className="terminal-button green"></div>
+  </div>
+  <div className="terminal-content min-h-[300px] overflow-x-auto px-4">
+    <pre className="whitespace-pre-wrap break-words">
+      {terminalText
+        .split("\n")
+        .map((line, i) => {
+          const clean = line.trim()
+          if (!clean) return null
+          return (
+            <div key={`line-${i}-${clean.slice(0, 10)}`} className="mb-2">
+              {i === 0 ? (
+                <span className="text-green-500">$ </span>
+              ) : (
+                <span className="text-green-500">&gt; </span>
+              )}
+              {line}
+              {lineIndex === i &&
+                charIndex === line.length &&
+                showCursor && <span className="cursor"></span>}
             </div>
+          )
+        })}
+    </pre>
+  </div>
+</div>
+
+
 
             <motion.div
               className="flex justify-center mt-8 gap-6"
