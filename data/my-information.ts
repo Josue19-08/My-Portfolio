@@ -95,7 +95,7 @@ export const myInformation = {
         en: "Open Source Contributor",
         es: "Colaborador de Código Abierto"
       },
-      issuer: "Various OSS Projects",
+      issuer: "Various OSS Projects in Only Dust",
       badge: ""
     },
     {
@@ -113,7 +113,40 @@ export const myInformation = {
       },
       issuer: "Scrum",
       badge: ""
+    },
+    {
+      name: {
+        en: "CCNA 1: Introduction to Networks",
+        es: "CCNA 1: Introducción a Redes"
+      },
+      issuer: "Cisco Academy - University of Costa Rica",
+      badge: ""
+    },
+    {
+      name: {
+        en: "CCNA 2: Routing and Switching Essentials",
+        es: "CCNA 2: Fundamentos de Routing y Switching"
+      },
+      issuer: "Cisco Academy - University of Costa Rica",
+      badge: ""
+    },
+    {
+      name: {
+        en: "CCNA 3: Scaling Networks",
+        es: "CCNA 3: Redes Escalables"
+      },
+      issuer: "Cisco Academy - University of Costa Rica",
+      badge: ""
+    },
+    {
+      name: {
+        en: "CCNA 4: Connecting Networks",
+        es: "CCNA 4: Conectando Redes"
+      },
+      issuer: "Cisco Academy - University of Costa Rica",
+      badge: ""
     }
+    
   ],
 
   interests: {
@@ -131,8 +164,7 @@ export const myInformation = {
       "Astronomy",
       "Languages",
       "Retro games",
-      "Traveling",
-      "Futurism"
+      "Traveling"
     ],
     es: [
       "Open-source",
@@ -148,8 +180,7 @@ export const myInformation = {
       "Astronomía",
       "Idiomas",
       "Videojuegos retro",
-      "Viajar",
-      "Futurismo"
+      "Viajar"
     ]
   }
   
