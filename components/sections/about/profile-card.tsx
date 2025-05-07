@@ -89,15 +89,20 @@ export function ProfileCard() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <Button className="w-full">
-            <Mail className="mr-2 h-4 w-4" />
-            {language === "en" ? "Contact Me" : "Contáctame"}
-          </Button>
-          <Button variant="outline" className="w-full">
-            <Download className="mr-2 h-4 w-4" />
-            {language === "en" ? "Download CV" : "Descargar CV"}
-          </Button>
+          <a href="https://wa.link/5o4qrw" target="_blank" rel="noopener noreferrer">
+            <Button className="w-full">
+              <Mail className="mr-2 h-4 w-4" />
+              {language === "en" ? "Contact Me" : "Contáctame"}
+            </Button>
+          </a><a href="/CV-Josue-Araya-Marin.pdf" download>
+            <Button variant="outline" className="w-full">
+              <Download className="mr-2 h-4 w-4" />
+              {language === "en" ? "Download CV" : "Descargar CV"}
+            </Button>
+          </a>
+
         </div>
+
       </div>
     </div>
   )
