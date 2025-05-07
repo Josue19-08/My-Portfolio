@@ -110,7 +110,7 @@ export const timelineEvents: TimelineEvent[] = [
       en: "Started contributing to open source projects using React, Cairo and Web3. Still an active contributor.",
       es: "Comencé a contribuir en proyectos de código abierto con React, Cairo y Web3. Sigo siendo colaborador activo.",
     },
-    skills: ["React", "Cairo", "Web3", "Open Source"],
+    skills: ["React", "Cairo", "Web3", "Open Source", "Node.js"],
   },
   {
     year: "2024",
