@@ -1,20 +1,20 @@
 export type ContactInfo = {
   email: {
-    address: string 
+    address: string
     description: {
       en: string
       es: string
     }
   }
   phone: {
-    number: string 
+    number: string
     description: {
       en: string
       es: string
     }
   }
   location: {
-    place: string 
+    place: string
     description: {
       en: string
       es: string
@@ -24,6 +24,8 @@ export type ContactInfo = {
     github: string
     linkedin: string
     twitter: string
+    send: string     // Telegram
+    phone: string    // WhatsApp
   }
   formLabels: {
     name: {
@@ -119,6 +121,8 @@ export const contactInfo: ContactInfo = {
     github: "https://github.com/Josue19-08",
     linkedin: "https://www.linkedin.com/in/josue-araya-marin-336975245/",
     twitter: "https://x.com/josuearayamarin",
+    send: "https://t.me/Josue1908Cr",
+    phone: "https://wa.link/5o4qrw",
   },
   formLabels: {
     name: {
