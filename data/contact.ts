@@ -97,7 +97,7 @@ export type ContactInfo = {
 
 export const contactInfo: ContactInfo = {
   email: {
-    address: "josuemarin2009@hotmail.com",
+    address: "josue19-08@hotmail.com",
     description: {
       en: "Feel free to email me anytime!",
       es: "¡No dudes en enviarme un correo en cualquier momento!",
