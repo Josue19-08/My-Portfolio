@@ -89,12 +89,16 @@ export function Projects() {
                           GitHub
                         </a>
                       </Button>
-                      <Button variant="default" size="lg" asChild className="bg-primary text-white hover:bg-primary/80">
-                        <a href={currentProject.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="mr-2 h-5 w-5" />
-                          Demo
-                        </a>
+                      <Button
+                        variant="default"
+                        size="lg"
+                        disabled
+                        className="bg-primary text-white opacity-50 cursor-not-allowed"
+                      >
+                        <ExternalLink className="mr-2 h-5 w-5" />
+                        Demo
                       </Button>
+
                     </div>
                   </motion.div>
                 </div>
@@ -150,9 +154,8 @@ export function Projects() {
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === activeIndex ? "bg-primary w-6" : "bg-primary/30"
-              }`}
+              className={`w-3 h-3 rounded-full transition-all ${index === activeIndex ? "bg-primary w-6" : "bg-primary/30"
+                }`}
               aria-label={`Go to project ${index + 1}`}
             />
           ))}
@@ -172,9 +175,8 @@ export function Projects() {
             whileHover={{ y: -10, scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setActiveIndex(index)}
-            className={`relative cursor-pointer rounded-lg overflow-hidden aspect-video ${
-              index === activeIndex ? "ring-2 ring-primary" : ""
-            }`}
+            className={`relative cursor-pointer rounded-lg overflow-hidden aspect-video ${index === activeIndex ? "ring-2 ring-primary" : ""
+              }`}
           >
             <Image
               src={project.image || "/placeholder.svg"}
