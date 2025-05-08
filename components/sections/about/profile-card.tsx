@@ -65,7 +65,7 @@ export function ProfileCard() {
 
         <div className="flex items-center justify-center gap-2 text-muted-foreground mb-6">
           <MapPin className="w-4 h-4" />
-          <span>San José, Costa Rica</span>
+          <span>Turrialba, Cartago, Costa Rica</span>
         </div>
 
         <div className="flex justify-center gap-3 mb-6">
