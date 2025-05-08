@@ -1,26 +1,30 @@
 let userConfig = undefined
 try {
-  // try to import ESM first
+  // Intenta importar como ESM
   userConfig = await import('./v0-user-next.config.mjs')
 } catch (e) {
   try {
-    // fallback to CJS import
-    userConfig = await import("./v0-user-next.config");
-  } catch (innerError) {
-    // ignore error
+    // Fallback CJS
+    userConfig = await import('./v0-user-next.config')
+  } catch (_) {
+    // Ignora error si no existe ningún archivo
   }
 }
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  basePath: '/My-Portfolio',
+  assetPrefix: '/My-Portfolio/',
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
   },
   experimental: {
     webpackBuildWorker: true,
@@ -29,15 +33,16 @@ const nextConfig = {
   },
 }
 
-if (userConfig) {
-  // ESM imports will have a "default" property
-  const config = userConfig.default || userConfig
+// 🔒 Claves que no deben ser sobreescritas
+const protectedKeys = ['output', 'basePath', 'assetPrefix', 'trailingSlash']
 
+// Merge dinámico con protección
+if (userConfig) {
+  const config = userConfig.default || userConfig
   for (const key in config) {
-    if (
-      typeof nextConfig[key] === 'object' &&
-      !Array.isArray(nextConfig[key])
-    ) {
+    if (protectedKeys.includes(key)) continue
+
+    if (typeof nextConfig[key] === 'object' && !Array.isArray(nextConfig[key])) {
       nextConfig[key] = {
         ...nextConfig[key],
         ...config[key],
