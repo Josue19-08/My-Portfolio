@@ -57,7 +57,7 @@ export const projects: Project[] = [
     },
     technologies: ["Node.js", "pnpm", "Docker", "Docker Compose", "Hasura", "Rust", "TypeScript"],
     github: "https://github.com/OFFER-HUB/offer-hub",
-    demo: "",
+    demo: "https://offer-hub.org",
     image: "images/offer-hub-banner.png",
   },
   {
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     },
     technologies: ["React", "Vite", "TailwindCSS", "Dojo Engine", "Cairo", "StarkNet", "TypeScript"],
     github: "https://github.com/AquaStark/Aqua-Stark",
-    demo: "",
+    demo: "https://aqua-stark.com",
     image: "images/aqua-stark-banner.png",
   },
 ]

@@ -89,16 +89,30 @@ export function Projects() {
                           GitHub
                         </a>
                       </Button>
-                      <Button
-                        variant="default"
-                        size="lg"
-                        disabled
-                        className="bg-primary text-white opacity-50 cursor-not-allowed"
-                      >
-                        <ExternalLink className="mr-2 h-5 w-5" />
-                        Demo
-                      </Button>
-
+                      {/* Ensure only projects with a demo link are interactive */}
+                      {currentProject.demo ? (
+                        <Button
+                          variant="default"
+                          size="lg"
+                          asChild
+                          className="bg-primary text-white hover:bg-primary/90"
+                        >
+                          <a href={currentProject.demo} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="mr-2 h-5 w-5" />
+                            Demo
+                          </a>
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="default"
+                          size="lg"
+                          disabled
+                          className="bg-primary text-white opacity-50 cursor-not-allowed"
+                        >
+                          <ExternalLink className="mr-2 h-5 w-5" />
+                          Demo
+                        </Button>
+                      )}
                     </div>
                   </motion.div>
                 </div>
