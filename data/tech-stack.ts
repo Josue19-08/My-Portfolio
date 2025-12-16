@@ -26,7 +26,12 @@ export const techStack: TechStack = {
   ],
   backend: [
     { name: "Node.js", icon: "🟢", level: 90 },
+    { name: "Fastify", icon: "⚡", level: 85 },
     { name: "Express", icon: "🚂", level: 85 },
+    { name: "Supabase", icon: "🔥", level: 80 },
+    { name: "Rust", icon: "🦀", level: 60 },
+    { name: "Solidity", icon: "💎", level: 70 },
+    { name: "Cairo", icon: "🐫", level: 75 },
     { name: "MongoDB", icon: "🍃", level: 80 },
     { name: "PostgreSQL", icon: "🐘", level: 75 },
     { name: "GraphQL", icon: "⚡", level: 70 },
@@ -40,6 +45,8 @@ export const techStack: TechStack = {
   ],
   tools: [
     { name: "Git", icon: "🔄", level: 95 },
+    { name: "Starknet.js", icon: "✨", level: 80 },
+    { name: "Stellar SDK", icon: "🚀", level: 75 },
     { name: "Docker", icon: "🐳", level: 80 },
     { name: "AWS", icon: "☁️", level: 70 },
     { name: "GitHub Actions", icon: "🔄", level: 85 },
@@ -49,5 +56,3 @@ export const techStack: TechStack = {
     { name: "VS Code", icon: "💻", level: 95 },
   ],
 }
-
-
