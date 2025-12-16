@@ -16,6 +16,28 @@ export const myInformation = {
     ]
   },
 
+  experience: [
+    {
+      position: {
+        en: "Backend/Frontend Developer",
+        es: "Desarrollador Backend/Frontend"
+      },
+      company: {
+        en: "Neural Coders",
+        es: "Neural Coders"
+      },
+      period: {
+        en: "August 2025 - December 2025",
+        es: "Agosto 2025 - Diciembre 2025"
+      },
+      description: {
+        en: "Responsible for developing part of a backend module for 6 months using Java Springboot technology and at the end of the period I was developing the frontend of the same module.",
+        es: "Encargado de desarrollar parte de un módulo backend durante 6 meses utilizando tecnología Java Springboot y al finalizar el periodo estuve desarrollando el frontend del mismo módulo."
+      },
+      technologies: ["Java", "Spring Boot", "Frontend"]
+    }
+  ],
+
   education: [
     {
       degree: {
