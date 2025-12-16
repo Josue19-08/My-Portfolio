@@ -35,6 +35,13 @@ export function TechStack() {
     Docker: <Layers className="w-5 h-5 text-blue-500" />,
     AWS: <Globe className="w-5 h-5 text-yellow-500" />,
     "GitHub Actions": <GitBranch className="w-5 h-5 text-purple-400" />,
+    Fastify: <Zap className="w-5 h-5 text-white" />,
+    Supabase: <Database className="w-5 h-5 text-emerald-400" />,
+    Rust: <Code className="w-5 h-5 text-orange-600" />,
+    Solidity: <Code className="w-5 h-5 text-gray-400" />,
+    Cairo: <Code className="w-5 h-5 text-red-400" />,
+    "Starknet.js": <Code className="w-5 h-5 text-red-400" />,
+    "Stellar SDK": <Globe className="w-5 h-5 text-purple-400" />,
   }
 
   // Colores para cada categoría
