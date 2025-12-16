@@ -128,5 +128,53 @@ export const timelineEvents: TimelineEvent[] = [
     },
     skills: ["Starknet", "Cairo", "Web3", "Team Collaboration"],
   },
+  {
+    year: "2025",
+    title: {
+      en: "Backend & Frontend Developer Intern",
+      es: "Practicante Desarrollador Backend y Frontend",
+    },
+    company: {
+      en: "Neural Coders",
+      es: "Neural Coders",
+    },
+    description: {
+      en: "Developed a backend module using Java Spring Boot and later worked on the frontend implementation. (August - December)",
+      es: "Desarrollé un módulo backend usando Java Spring Boot y posteriormente trabajé en la implementación del frontend. (Agosto - Diciembre)",
+    },
+    skills: ["Java", "Spring Boot", "Frontend Development"],
+  },
+  {
+    year: "2025",
+    title: {
+      en: "OFFER-HUB Project & Hackathon Winner",
+      es: "Proyecto OFFER-HUB y Ganador de Hackathon",
+    },
+    company: {
+      en: "Hackathon / Freelance Project",
+      es: "Hackathon / Proyecto Freelance",
+    },
+    description: {
+      en: "Won a prize with the OFFER-HUB freelance platform project. The success led to participating in development events in Argentina.",
+      es: "Ganamos un premio con el proyecto de plataforma freelance OFFER-HUB. El éxito nos llevó a participar en eventos de desarrollo en Argentina.",
+    },
+    skills: ["Rust", "React", "Web3", "Entrepreneurship"],
+  },
+  {
+    year: "2025",
+    title: {
+      en: "DevConnect Ethereum Participant",
+      es: "Participante en DevConnect Ethereum",
+    },
+    company: {
+      en: "Ethereum Foundation",
+      es: "Ethereum Foundation",
+    },
+    description: {
+      en: "Traveled to Argentina to participate in DevConnect Ethereum, networking and showcasing developed products. (November)",
+      es: "Viajé a Argentina para participar en DevConnect Ethereum, haciendo networking y presentando los productos desarrollados. (Noviembre)",
+    },
+    skills: ["Networking", "Ethereum", "Web3", "Blockchain"],
+  },
 ]
 
