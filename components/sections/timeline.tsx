@@ -48,7 +48,7 @@ export function Timeline() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: true, margin: "-100px" }}
         >
           {/* Línea central para pantallas medianas y grandes */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-primary/30 transform -translate-x-1/2"></div>
@@ -57,28 +57,21 @@ export function Timeline() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className={`mb-16 md:mb-24 relative ${
-                index % 2 === 0 ? "md:pr-8 md:text-right md:ml-0 md:mr-auto" : "md:pl-8 md:text-left md:ml-auto md:mr-0"
-              } md:w-[calc(50%-1rem)]`}
-              style={{
-                marginLeft: index % 2 === 0 ? "0" : "auto",
-                marginRight: index % 2 === 0 ? "auto" : "0",
-              }}
+              className={`mb-12 md:mb-24 relative ${
+                index % 2 === 0 ? "md:pr-12 md:text-right md:mr-auto" : "md:pl-12 md:text-left md:ml-auto"
+              } md:w-1/2 w-full`}
             >
               {/* Punto en la línea de tiempo para pantallas medianas y grandes */}
               <div
-                className="hidden md:flex absolute top-5 w-10 h-10 rounded-full bg-background border-4 border-primary items-center justify-center z-10"
-                style={{
-                  right: index % 2 === 0 ? "-1.25rem" : "auto",
-                  left: index % 2 === 1 ? "-1.25rem" : "auto",
-                  transform: "translateX(50%)",
-                }}
+                className={`hidden md:flex absolute top-6 w-10 h-10 rounded-full bg-background border-4 border-primary items-center justify-center z-10 
+                  ${index % 2 === 0 ? "-right-5" : "-left-5"}
+                `}
               >
                 {getEventIcon(event.title[language])}
               </div>
 
               {/* Tarjeta del evento */}
-              <Card className="border border-primary/20 bg-background/50 backdrop-blur-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <Card className="border border-primary/20 bg-background/50 backdrop-blur-sm overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full">
                 {/* Barra superior de color */}
                 <div className="h-1.5 w-full bg-gradient-to-r from-primary to-secondary"></div>
 
@@ -121,8 +114,8 @@ export function Timeline() {
 
               {/* Flecha conectora para pantallas medianas y grandes */}
               <div
-                className={`hidden md:block absolute top-8 w-8 h-0.5 bg-primary/30 ${
-                  index % 2 === 0 ? "right-0" : "left-0"
+                className={`hidden md:block absolute top-10 w-8 h-0.5 bg-primary/30 ${
+                  index % 2 === 0 ? "right-[-2rem]" : "left-[-2rem]"
                 }`}
               ></div>
             </motion.div>
