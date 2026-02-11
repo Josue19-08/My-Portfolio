@@ -8,8 +8,9 @@ export type Project = {
     en: string
     es: string
   }
-  technologies: string[] 
+  technologies: string[]
   github: string
+  githubLocked?: boolean
   demo: string
   image: string
 }
@@ -31,19 +32,20 @@ export const projects: Project[] = [
     image: "images/galaxy-banner.png",
   },
   {
-    id: "aurora-language-platform",
+    id: "enigma-trust-score",
     title: {
-      en: "AURORA.LA - Language Learning Platform",
-      es: "AURORA.LA - Plataforma de Aprendizaje de Idiomas",
+      en: "Enigma - Trust Score for Autonomous Agents",
+      es: "Enigma - Puntuación de Confianza para Agentes Autónomos",
     },
     description: {
-      en: "AURORA.LA is an innovative on-chain, AI-powered language learning platform that offers personalized and interactive learning experiences. The project integrates smart contracts and blockchain logic with a dynamic and modern frontend for users to practice, learn, and evolve their language skills in a gamified way.",
-      es: "AURORA.LA es una innovadora plataforma de aprendizaje de idiomas impulsada por IA y tecnología on-chain. Ofrece experiencias de aprendizaje personalizadas e interactivas, integrando contratos inteligentes y lógica blockchain con un frontend moderno y dinámico que permite a los usuarios practicar, aprender y avanzar en sus habilidades lingüísticas de forma gamificada.",
+      en: "Enigma is a comprehensive platform for discovering, verifying, and monitoring autonomous smart contract agents on Avalanche. It provides real-time trust scoring powered by on-chain analysis, automated contract verification with Centinela engine, OpenZeppelin compliance checks, and community feedback to ensure transparency and security.",
+      es: "Enigma es una plataforma integral para descubrir, verificar y monitorear agentes autónomos de contratos inteligentes en Avalanche. Proporciona puntuación de confianza en tiempo real mediante análisis on-chain, verificación automática de contratos con el motor Centinela, verificaciones de cumplimiento de OpenZeppelin y retroalimentación de la comunidad para garantizar transparencia y seguridad.",
     },
-    technologies: ["Next.js", "TailwindCSS", "Node.js", "PostgreSQL", "Docker", "Rust", "Stellar", "TypeScript"],
-    github: "https://github.com/AURORALAOrg",
-    demo: "",
-    image: "images/aurora-banner.png",
+    technologies: ["Next.js", "TypeScript", "TailwindCSS", "Avalanche", "Smart Contracts", "OpenZeppelin", "Framer Motion"],
+    github: "",
+    githubLocked: true,
+    demo: "https://www.erc-8004scan.xyz/",
+    image: "images/enigma-banner.png",
   },
   {
     id: "offer-hub",

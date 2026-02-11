@@ -4,7 +4,8 @@ import { useState, useRef } from "react"
 import { useLanguage } from "@/components/language/language-provider"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Lock } from "lucide-react"
 import { motion, AnimatePresence, useInView } from "framer-motion"
 import { projects } from "@/data/projects"
 import Image from "next/image"
@@ -83,12 +84,33 @@ export function Projects() {
                     </div>
 
                     <div className="flex gap-4 mt-6">
-                      <Button variant="outline" size="lg" asChild>
-                        <a href={currentProject.github} target="_blank" rel="noopener noreferrer">
-                          <Github className="mr-2 h-5 w-5" />
-                          GitHub
-                        </a>
-                      </Button>
+                      <TooltipProvider>
+                        {currentProject.githubLocked ? (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="lg"
+                                disabled
+                                className="opacity-50 cursor-not-allowed"
+                              >
+                                <Lock className="mr-2 h-5 w-5" />
+                                GitHub
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{language === "en" ? "Private repository for security" : "Repositorio privado por seguridad"}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        ) : (
+                          <Button variant="outline" size="lg" asChild>
+                            <a href={currentProject.github} target="_blank" rel="noopener noreferrer">
+                              <Github className="mr-2 h-5 w-5" />
+                              GitHub
+                            </a>
+                          </Button>
+                        )}
+                      </TooltipProvider>
                       {/* Ensure only projects with a demo link are interactive */}
                       {currentProject.demo ? (
                         <Button
