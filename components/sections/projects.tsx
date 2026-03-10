@@ -121,7 +121,7 @@ export function Projects() {
                         >
                           <a href={currentProject.demo} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="mr-2 h-5 w-5" />
-                            Demo
+                            {currentProject.demoLabel ? currentProject.demoLabel[language] : (language === "en" ? "Demo" : "Demo")}
                           </a>
                         </Button>
                       ) : (
@@ -132,9 +132,26 @@ export function Projects() {
                           className="bg-primary text-white opacity-50 cursor-not-allowed"
                         >
                           <ExternalLink className="mr-2 h-5 w-5" />
-                          Demo
+                          {currentProject.demoLabel ? currentProject.demoLabel[language] : (language === "en" ? "Demo" : "Demo")}
                         </Button>
                       )}
+
+                      {/* Secondary Demo Button */}
+                      {currentProject.secondaryDemo && (
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          asChild
+                          className="border-primary/50 text-primary hover:bg-primary/10"
+                        >
+                          <a href={currentProject.secondaryDemo} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="mr-2 h-5 w-5" />
+                            {currentProject.secondaryDemoLabel ? currentProject.secondaryDemoLabel[language] : (language === "en" ? "More Info" : "Más Info")}
+                          </a>
+                        </Button>
+                      )}
+
+
                     </div>
                   </motion.div>
                 </div>

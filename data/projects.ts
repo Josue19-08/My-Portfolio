@@ -12,10 +12,60 @@ export type Project = {
   github: string
   githubLocked?: boolean
   demo: string
+  demoLabel?: {
+    en: string
+    es: string
+  }
+  secondaryDemo?: string
+  secondaryDemoLabel?: {
+    en: string
+    es: string
+  }
   image: string
 }
 
+
 export const projects: Project[] = [
+  {
+    id: "zylith",
+    title: {
+      en: "Zylith - Shielded Liquidity for Starknet",
+      es: "Zylith - Liquidez Blindada para Starknet",
+    },
+    description: {
+      en: "A shielded concentrated liquidity market maker (CLMM) on Starknet. It enables privacy-preserving swaps and liquidity provision using zero-knowledge proofs (Groth16) for Bitcoin derivatives like tBTC and WBTC.",
+      es: "Un market maker de liquidez concentrada blindada (CLMM) en Starknet. Permite intercambios y provisión de liquidez con preservación de la privacidad utilizando pruebas de conocimiento cero (Groth16) para derivados de Bitcoin como tBTC y WBTC.",
+    },
+    technologies: ["Starknet", "Cairo", "Next.js", "Garaga", "Groth16", "TypeScript", "Bitcoin"],
+    github: "https://github.com/salazarsebas/Zylith",
+    demo: "https://zylith-three.vercel.app/",
+    image: "images/zylith-banner.png",
+  },
+  {
+    id: "offer-hub",
+    title: {
+      en: "OfferHub - Marketplace Infrastructure Orchestrator",
+      es: "OfferHub - Orquestador de Infraestructura de Marketplaces",
+    },
+    description: {
+      en: "A non-custodial infrastructure orchestrator for building decentralized marketplaces on Stellar. It provides secure escrow protection and global payment flows, featuring a freelance marketplace template as a real-world implementation case.",
+      es: "Un orquestador de infraestructura no custodial para construir marketplaces descentralizados en Stellar. Permite protección de custodia segura (escrow) y flujos de pago globales, incluyendo una plantilla de marketplace freelance como caso de implementación real.",
+    },
+
+    technologies: ["Stellar", "Next.js", "Rust", "Node.js", "Docker", "Hasura", "TypeScript"],
+    github: "https://github.com/OFFER-HUB/offer-hub",
+    demo: "https://offer-hub.tech/",
+    demoLabel: {
+      en: "Marketplace Demo",
+      es: "Demo Marketplace",
+    },
+    secondaryDemo: "https://offer-hub.org/",
+    secondaryDemoLabel: {
+      en: "Docs & Community",
+      es: "Docs y Comunidad",
+    },
+    image: "images/offer-hub-banner.png",
+  },
   {
     id: "galaxy-smart-wallet",
     title: {
@@ -32,36 +82,23 @@ export const projects: Project[] = [
     image: "images/galaxy-banner.png",
   },
   {
-    id: "enigma-trust-score",
+    id: "flare-trust-score",
     title: {
-      en: "Enigma - Trust Score for Autonomous Agents",
-      es: "Enigma - Puntuación de Confianza para Agentes Autónomos",
+      en: "Flare - Trust Score for Autonomous Agents",
+      es: "Flare - Puntuación de Confianza para Agentes Autónomos",
     },
     description: {
-      en: "Enigma is a comprehensive platform for discovering, verifying, and monitoring autonomous smart contract agents on Avalanche. It provides real-time trust scoring powered by on-chain analysis, automated contract verification with Centinela engine, OpenZeppelin compliance checks, and community feedback to ensure transparency and security.",
-      es: "Enigma es una plataforma integral para descubrir, verificar y monitorear agentes autónomos de contratos inteligentes en Avalanche. Proporciona puntuación de confianza en tiempo real mediante análisis on-chain, verificación automática de contratos con el motor Centinela, verificaciones de cumplimiento de OpenZeppelin y retroalimentación de la comunidad para garantizar transparencia y seguridad.",
+      en: "Flare is a comprehensive platform for discovering, verifying, and monitoring autonomous smart contract agents on Avalanche. It provides real-time trust scoring powered by on-chain analysis, automated contract verification with Centinela engine, OpenZeppelin compliance checks, and community feedback to ensure transparency and security.",
+      es: "Flare es una plataforma integral para descubrir, verificar y monitorear agentes autónomos de contratos inteligentes en Avalanche. Proporciona puntuación de confianza en tiempo real mediante análisis on-chain, verificación automática de contratos con el motor Centinela, verificaciones de cumplimiento de OpenZeppelin y retroalimentación de la comunidad para garantizar transparencia y seguridad.",
     },
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "Avalanche", "Smart Contracts", "OpenZeppelin", "Framer Motion"],
     github: "",
     githubLocked: true,
     demo: "https://www.erc-8004scan.xyz/",
-    image: "images/enigma-banner.png",
+    image: "images/flare-banner.png",
   },
-  {
-    id: "offer-hub",
-    title: {
-      en: "OFFER-HUB - Decentralized Freelance Platform",
-      es: "OFFER-HUB - Plataforma Freelance Descentralizada",
-    },
-    description: {
-      en: "OFFER-HUB is a decentralized freelance platform leveraging blockchain, cryptocurrency payments, and smart contracts to connect freelancers and clients globally. Designed to remove intermediaries, lower fees, and empower seamless collaboration in areas such as design, programming, writing, and consulting.",
-      es: "OFFER-HUB es una plataforma freelance descentralizada que utiliza blockchain, pagos con criptomonedas y contratos inteligentes para conectar freelancers y clientes a nivel global. Está diseñada para eliminar intermediarios, reducir comisiones y facilitar la colaboración en áreas como diseño, programación, redacción y consultoría.",
-    },
-    technologies: ["Node.js", "pnpm", "Docker", "Docker Compose", "Hasura", "Rust", "TypeScript"],
-    github: "https://github.com/OFFER-HUB/offer-hub",
-    demo: "https://www.offer-hub.org/",
-    image: "images/offer-hub-banner.png",
-  },
+
+
   {
     id: "aqua-stark",
     title: {
