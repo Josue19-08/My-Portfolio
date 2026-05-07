@@ -1,40 +1,57 @@
 export const myInformation = {
   bio: {
     en: [
-      "I'm Josué Araya, a passionate software developer with a strong foundation in technologies.",
-      "Since 2024, I've been exploring the world of WEB3 and open-source collaboration.",
-      "I love building useful tools that create impact, especially in blockchain and educational platforms.",
-      "Currently, I contribute actively to Web3 projects and build scalable solutions across modern stacks.",
-      "Always learning, always building."
+      "Full Stack Developer with over 2 years of professional experience building and maintaining real software systems.",
+      "Solid foundation in frontend and backend development, relational database design, REST API integration, and agile methodologies in collaborative environments.",
+      "I work with a broad stack including React, Angular, Ionic, .NET Core, Java, Node.js, Python, and FastAPI, participating in the full development lifecycle from analysis to production deployment.",
+      "Active contributor to more than 20 global open-source projects, with my own personal projects currently in production."
     ],
     es: [
-      "Soy Josué Araya, un desarrollador de software apasionado con una sólida base en tecnologías.",
-      "Desde 2024 he explorado el mundo del WEB3 y la colaboración open-source.",
-      "Me encanta construir herramientas útiles que generen impacto, especialmente en blockchain y educación.",
-      "Actualmente contribuyo activamente en proyectos Web3 y desarrollo soluciones escalables con tecnologías modernas.",
-      "Siempre aprendiendo, siempre construyendo."
+      "Desarrollador Full Stack con más de 2 años de experiencia profesional construyendo y manteniendo sistemas de software reales.",
+      "Con sólida base en desarrollo frontend y backend, diseño de bases de datos relacionales, integración de APIs REST y aplicación de metodologías ágiles en entornos colaborativos.",
+      "Trabajo con un stack amplio que incluye React, Angular, Ionic, .NET Core, Java, Node.js, Python y FastAPI, participando en el ciclo completo de desarrollo desde el análisis hasta la puesta en producción.",
+      "Contribuidor activo en más de 20 proyectos open source globales con proyectos propios en producción."
     ]
   },
 
   experience: [
     {
       position: {
-        en: "Backend/Frontend Developer",
-        es: "Desarrollador Backend/Frontend"
+        en: "Full Stack Developer",
+        es: "Desarrollador Full Stack"
       },
       company: {
-        en: "Neural Coders",
-        es: "Neural Coders"
+        en: "Neural Coders / Ministry of Public Education Project",
+        es: "Neural Coders / Proyecto Ministerio de Educación Pública"
       },
       period: {
-        en: "August 2025 - December 2025",
-        es: "Agosto 2025 - Diciembre 2025"
+        en: "Professional Experience",
+        es: "Experiencia Profesional"
       },
       description: {
-        en: "Responsible for developing part of a backend module for 6 months using Java Springboot technology and at the end of the period I was developing the frontend of the same module.",
-        es: "Encargado de desarrollar parte de un módulo backend durante 6 meses utilizando tecnología Java Springboot y al finalizar el periodo estuve desarrollando el frontend del mismo módulo."
+        en: "Participated in the development of an institutional management system for the Ministry of Public Education of a Central American government, sponsored by the World Bank. I focused heavily on the backend, developing a solution for the management of educational centers, where I was in charge of my own modules and database design. Later, I collaborated on frontend tasks and frontend-backend integration, working in professional environments with version control, code review, issue management, and development best practices.",
+        es: "Participé en el desarrollo de un sistema de gestión institucional para el Ministerio de Educación Pública de un gobierno centroamericano patrocinado por el Banco Mundial. Me enfoqué en la parte de backend desarrollando una solución para la gestión de centros educativos, estando a cargo de mis propios módulos y diseño de base de datos. Posteriormente, colaboré en tareas de frontend e integración frontend-backend, trabajando en entornos profesionales con control de versiones, revisión de código y buenas prácticas."
       },
-      technologies: ["Java", "Spring Boot", "Frontend"]
+      technologies: ["Java", "Spring Boot", "React", "Frontend", "Backend", "Database Design"]
+    },
+    {
+      position: {
+        en: "Open Source Contributor & Independent Developer",
+        es: "Contribuidor Open Source & Desarrollador Independiente"
+      },
+      company: {
+        en: "Global Collaborative Projects",
+        es: "Proyectos Colaborativos Globales"
+      },
+      period: {
+        en: "2+ Years Experience",
+        es: "Más de 2 años de experiencia"
+      },
+      description: {
+        en: "Over two years of active experience in open-source projects, having contributed to more than 20 global projects and collaborated with developers worldwide. Developed user interfaces with React, Next.js, and TypeScript following componentization and clean code best practices. Implemented responsive designs with Tailwind CSS, integrated REST APIs, and optimized web performance.",
+        es: "Más de dos años de experiencia activa en proyectos de código abierto, habiendo contribuido a más de 20 proyectos a nivel global. Desarrollo de interfaces de usuario con React, Next.js y TypeScript siguiendo buenas prácticas de componentización y clean code. Implementación de diseños responsivos con Tailwind CSS, integración de APIs REST y optimización de rendimiento web."
+      },
+      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "REST API", "Clean Code"]
     }
   ],
 
@@ -45,12 +62,12 @@ export const myInformation = {
         es: "Bachillerato en Informática Empresarial"
       },
       institution: {
-        en: "University of Costa Rica",
-        es: "Universidad de Costa Rica"
+        en: "University of Costa Rica (UCR)",
+        es: "Universidad de Costa Rica (UCR)"
       },
       description: {
-        en: "Started undergraduate studies in Business Informatics. Currently in final semester.",
-        es: "Inicié estudios en Informática Empresarial. Actualmente en el último semestre."
+        en: "Currently in the process of joining the CPIC (Colegio de Profesionales en Informática y Computación).",
+        es: "En proceso de incorporación del CPIC (Colegio de Profesionales en Informática y Computación)."
       }
     },
     {

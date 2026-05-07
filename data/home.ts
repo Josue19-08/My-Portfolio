@@ -49,11 +49,11 @@ export const homeData: HomeData = {
     },
   },
   socialLinks: [
+    { icon: "phone", url: "https://wa.link/5o4qrw", label: "WhatsApp" },
+    { icon: "send", url: "https://t.me/Josue1908Cr", label: "Telegram" },
     { icon: "github", url: "https://github.com/Josue19-08", label: "GitHub" },
     { icon: "linkedin", url: "https://www.linkedin.com/in/josue-araya-marin-336975245/", label: "LinkedIn" },
     { icon: "twitter", url: "https://x.com/josuearayamarin", label: "Twitter" },
-    { icon: "send", url: "https://t.me/Josue1908Cr", label: "Telegram" },
-    { icon: "phone", url: "https://wa.link/5o4qrw", label: "WhatsApp" },
   ],
   profileImage: "/images/josue.jpeg",
 }

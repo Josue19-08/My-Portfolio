@@ -31,8 +31,8 @@ export const aboutData: AboutData = {
     es: "Desarrollador de Software",
   },
   englishLevel: {
-    en: "English Level: Low intermediate",
-    es: "Nivel de Inglés: Intermedio bajo",
+    en: "English B1 (Technical IT)",
+    es: "Inglés B1 Técnico (IT)",
   },
   bio: {
     en: [

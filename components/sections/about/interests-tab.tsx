@@ -15,13 +15,13 @@ export function InterestsTab() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="rounded-xl border border-primary/20 bg-background/50 backdrop-blur-sm p-6"
+      className="rounded-xl border border-white/10 bg-[#0a0a0a] backdrop-blur-sm p-6"
     >
-      <h3 className="text-2xl font-bold mb-6 text-primary">
+      <h3 className="text-2xl font-bold mb-6 text-white/90">
         {language === "en" ? "Interests & Hobbies" : "Intereses y Pasatiempos"}
       </h3>
 
-      <p className="text-muted-foreground mb-6">
+      <p className="text-white/60 mb-6">
         {language === "en"
           ? "Beyond coding, I'm passionate about various activities that keep me inspired and balanced."
           : "Más allá de la programación, me apasionan varias actividades que me mantienen inspirado y equilibrado."}
@@ -31,7 +31,7 @@ export function InterestsTab() {
         {myInformation.interests[language].map((interest, index) => (
           <motion.div
             key={index}
-            className="border border-primary/20 rounded-lg p-4 text-center hover:bg-primary/5 transition-colors"
+            className="border border-primary/20 rounded-lg p-4 text-center hover:bg-white/10 text-white/5 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >

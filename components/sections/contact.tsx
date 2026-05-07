@@ -1,480 +1,151 @@
 "use client"
 
-import type React from "react"
-import { useState, useRef } from "react"
-import { motion, useInView, AnimatePresence } from "framer-motion"
-import { z } from "zod"
-
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
 import { useLanguage } from "@/components/language/language-provider"
 import { contactInfo } from "@/data/contact"
 import {
   Mail,
-  Phone,
   MapPin,
   Send,
   Github,
   Linkedin,
   Twitter,
-  CheckCircle,
-  AlertCircle,
-  Loader2,
-  Calendar,
   Clock,
-  MessageSquare,
 } from "lucide-react"
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-
-// Validación del formulario
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  subject: z.string().min(5, {
-    message: "Subject must be at least 5 characters.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-})
-
-type FormData = z.infer<typeof formSchema>
 
 export function Contact() {
   const { language } = useLanguage()
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, amount: 0.1 })
 
-  const iconMap = {
-    github: Github,
-    linkedin: Linkedin,
-    twitter: Twitter,
-    send: Send,
-    phone: Phone,
-  }
-
   const socialLinks = [
-    { icon: "github", url: contactInfo.socialLinks.github, label: "GitHub" },
-    { icon: "linkedin", url: contactInfo.socialLinks.linkedin, label: "LinkedIn" },
-    { icon: "twitter", url: contactInfo.socialLinks.twitter, label: "Twitter" },
-    { icon: "send", url: contactInfo.socialLinks.send, label: "Telegram" },
-    { icon: "phone", url: contactInfo.socialLinks.phone, label: "WhatsApp" },
+    { icon: <Github className="w-5 h-5" />, url: contactInfo.socialLinks.github, label: "GitHub" },
+    { icon: <Linkedin className="w-5 h-5" />, url: contactInfo.socialLinks.linkedin, label: "LinkedIn" },
+    { icon: <Twitter className="w-5 h-5" />, url: contactInfo.socialLinks.twitter, label: "Twitter" },
+    { icon: <Send className="w-5 h-5" />, url: contactInfo.socialLinks.send, label: "Telegram" },
   ]
 
-  const validateField = (name: keyof FormData, value: string) => {
-    try {
-      const fieldSchema = formSchema.shape[name]
-      fieldSchema.parse(value)
-      setErrors((prev) => ({ ...prev, [name]: undefined }))
-      return true
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const message = error.errors[0]?.message || `Invalid ${name}`
-        setErrors((prev) => ({ ...prev, [name]: message }))
-        return false
-      }
-      return false
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    validateField(name as keyof FormData, value)
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Validar todos los campos
-    let isValid = true
-    Object.entries(formData).forEach(([key, value]) => {
-      const fieldValid = validateField(key as keyof FormData, value)
-      if (!fieldValid) isValid = false
-    })
-
-    if (!isValid) return
-
-    setIsSubmitting(true)
-
-    // Simular envío de formulario
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      setSubmitStatus("success")
-      // Resetear formulario después de éxito
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      })
-      // Resetear estado después de 5 segundos
-      setTimeout(() => {
-        setSubmitStatus("idle")
-      }, 5000)
-    } catch (error) {
-      setSubmitStatus("error")
-      // Resetear estado después de 5 segundos
-      setTimeout(() => {
-        setSubmitStatus("idle")
-      }, 5000)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  // Animaciones
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  }
-
   return (
-    <div className="container mx-auto" ref={containerRef}>
-      <div className="relative">
-        <div className="language-badge">{language.toUpperCase()}</div>
-        <h2 className="text-3xl font-bold mb-4 text-center">{language === "en" ? "Contact" : "Contacto"}</h2>
+    <div className="container mx-auto px-4" ref={containerRef}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.6 }}
+        className="relative bg-[#050505] border border-white/10 rounded-[2.5rem] p-8 md:p-16 overflow-hidden shadow-2xl"
+      >
+        {/* Glow Effects */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 blur-[150px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
-        {/* Descripción */}
-        <motion.p
-          className="text-center text-muted-foreground max-w-3xl mx-auto mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-        >
-          {language === "en"
-            ? "Have a project in mind or want to discuss a potential collaboration? I'd love to hear from you!"
-            : "¿Tienes un proyecto en mente o quieres discutir una posible colaboración? ¡Me encantaría saber de ti!"}
-        </motion.p>
-
-        {/* Tarjetas de contacto rápido */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          {/* Email */}
-          <motion.div
-            whileHover={{ y: -10, scale: 1.03 }}
-            className="bg-background/50 backdrop-blur-sm border border-primary/20 rounded-xl p-6 text-center"
-          >
-            <div className="mx-auto w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full mb-4">
-              <Mail className="h-6 w-6 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">{language === "en" ? "Email" : "Correo electrónico"}</h3>
-            <a href={`mailto:${contactInfo.email.address}`} className="text-primary hover:underline transition-all">
-              {contactInfo.email.address}
-            </a>
-            <p className="text-sm text-muted-foreground mt-2">{contactInfo.email.description[language]}</p>
-          </motion.div>
-
-          {/* Teléfono */}
-          <motion.div
-            whileHover={{ y: -10, scale: 1.03 }}
-            className="bg-background/50 backdrop-blur-sm border border-primary/20 rounded-xl p-6 text-center"
-          >
-            <div className="mx-auto w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full mb-4">
-              <Phone className="h-6 w-6 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">{language === "en" ? "Phone" : "Teléfono"}</h3>
-            <a
-              href={`tel:${contactInfo.phone.number.replace(/\s+/g, "")}`}
-              className="text-primary hover:underline transition-all"
-            >
-              {contactInfo.phone.number}
-            </a>
-            <p className="text-sm text-muted-foreground mt-2">{contactInfo.phone.description[language]}</p>
-          </motion.div>
-
-          {/* Ubicación */}
-          <motion.div
-            whileHover={{ y: -10, scale: 1.03 }}
-            className="bg-background/50 backdrop-blur-sm border border-primary/20 rounded-xl p-6 text-center"
-          >
-            <div className="mx-auto w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full mb-4">
-              <MapPin className="h-6 w-6 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">{language === "en" ? "Location" : "Ubicación"}</h3>
-            <p className="text-primary">{contactInfo.location.place}</p>
-            <p className="text-sm text-muted-foreground mt-2">{contactInfo.location.description[language]}</p>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8"
-        >
-          {/* 
-<Formulario de contacto>
-<motion.div variants={itemVariants} className="lg:col-span-7">
-  <Card className="border border-primary/20 bg-background/50 backdrop-blur-sm h-full overflow-hidden">
-    <div className="h-1 bg-gradient-to-r from-primary via-secondary to-primary"></div>
-
-    <CardHeader className="pb-0">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="bg-primary/10 p-2 rounded-full">
-          <MessageSquare className="h-5 w-5 text-primary" />
-        </div>
-        <CardTitle>{contactInfo.sections.form.title[language]}</CardTitle>
-      </div>
-      <CardDescription>{contactInfo.sections.form.description[language]}</CardDescription>
-    </CardHeader>
-    <CardContent className="pt-6">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium flex items-center gap-1">
-              {contactInfo.formLabels.name[language]} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              id="name"
-              name="name"
-              placeholder={contactInfo.formLabels.placeholders.name[language]}
-              value={formData.name}
-              onChange={handleChange}
-              className={`transition-all duration-300 ${errors.name ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-              disabled={isSubmitting}
-            />
-            {errors.name && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.name}
-              </motion.p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium flex items-center gap-1">
-              {contactInfo.formLabels.email[language]} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder={contactInfo.formLabels.placeholders.email[language]}
-              value={formData.email}
-              onChange={handleChange}
-              className={`transition-all duration-300 ${errors.email ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-              disabled={isSubmitting}
-            />
-            {errors.email && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-xs mt-1"
-              >
-                {errors.email}
-              </motion.p>
-            )}
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="subject" className="text-sm font-medium flex items-center gap-1">
-            {contactInfo.formLabels.subject[language]} <span className="text-red-500">*</span>
-          </label>
-          <Input
-            id="subject"
-            name="subject"
-            placeholder={contactInfo.formLabels.placeholders.subject[language]}
-            value={formData.subject}
-            onChange={handleChange}
-            className={`transition-all duration-300 ${errors.subject ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-            disabled={isSubmitting}
-          />
-          {errors.subject && (
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-red-500 text-xs mt-1"
-            >
-              {errors.subject}
-            </motion.p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="message" className="text-sm font-medium flex items-center gap-1">
-            {contactInfo.formLabels.message[language]} <span className="text-red-500">*</span>
-          </label>
-          <Textarea
-            id="message"
-            name="message"
-            placeholder={contactInfo.formLabels.placeholders.message[language]}
-            value={formData.message}
-            onChange={handleChange}
-            className={`min-h-[180px] resize-none transition-all duration-300 ${errors.message ? "border-red-500 bg-red-500/5" : "focus:border-primary/50"}`}
-            disabled={isSubmitting}
-          />
-          {errors.message && (
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-red-500 text-xs mt-1"
-            >
-              {errors.message}
-            </motion.p>
-          )}
-        </div>
-
-        <AnimatePresence mode="wait">
-          {submitStatus === "idle" ? (
-            <motion.div
-              key="submit-button"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <Button type="submit" className="w-full group" disabled={isSubmitting} size="lg">
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    {language === "en" ? "Sending..." : "Enviando..."}
-                  </>
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          
+          {/* Left Side: Call to Action */}
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
+                {language === "en" ? (
+                  <>Let's build something <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">amazing</span> together.</>
                 ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    {contactInfo.formLabels.submit[language]}
-                  </>
+                  <>Construyamos algo <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">increíble</span> juntos.</>
                 )}
-              </Button>
-            </motion.div>
-          ) : submitStatus === "success" ? (
-            <motion.div
-              key="success-message"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-green-500/10 border border-green-500/30 text-green-500 p-6 rounded-md flex items-center"
-            >
-              <CheckCircle className="h-6 w-6 mr-3 flex-shrink-0" />
-              <div>
-                <h4 className="font-medium mb-1">
-                  {language === "en" ? "Message sent successfully!" : "¡Mensaje enviado con éxito!"}
-                </h4>
-                <p className="text-sm">
-                  {language === "en"
-                    ? "Thank you for reaching out. I'll get back to you as soon as possible."
-                    : "Gracias por contactarme. Te responderé lo antes posible."}
-                </p>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="error-message"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-red-500/10 border border-red-500/30 text-red-500 p-6 rounded-md flex items-center"
-            >
-              <AlertCircle className="h-6 w-6 mr-3 flex-shrink-0" />
-              <div>
-                <h4 className="font-medium mb-1">
-                  {language === "en" ? "Error sending message" : "Error al enviar el mensaje"}
-                </h4>
-                <p className="text-sm">
-                  {language === "en"
-                    ? "There was an error sending your message. Please try again or contact me directly."
-                    : "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo o contáctame directamente."}
-                </p>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </form>
-    </CardContent>
-  </Card>
-</motion.div>
-*/}
+              </h2>
+              <p className="text-lg text-white/60 max-w-md leading-relaxed">
+                {language === "en"
+                  ? "I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions."
+                  : "Siempre estoy abierto a discutir nuevos proyectos, ideas creativas u oportunidades para ser parte de tu visión."}
+              </p>
+            </div>
 
-          {/* Información de contacto */}
-          <motion.div variants={itemVariants} className="lg:col-span-5">
-            <Card className="border border-primary/20 bg-background/50 backdrop-blur-sm h-full overflow-hidden">
-              {/* Barra superior decorativa */}
-              <div className="h-1 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href={`mailto:${contactInfo.email.address}`}
+                className="group relative inline-flex items-center justify-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 overflow-hidden"
+              >
+                <Mail className="w-5 h-5" />
+                <span>{language === "en" ? "Send an Email" : "Enviar Correo"}</span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+              </a>
+              
+              <a
+                href={contactInfo.socialLinks.phone}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 bg-[#0a0a0a] border border-white/20 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/5 hover:border-white/40 transition-all duration-300"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
 
-              <CardHeader className="pb-0">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-primary/10 p-2 rounded-full">
-                    <Calendar className="h-5 w-5 text-primary" />
-                  </div>
-                  <CardTitle>{contactInfo.sections.info.title[language]}</CardTitle>
+          {/* Right Side: Info Card */}
+          <div className="relative group p-[1px] rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.3)]">
+            {/* Animated Magic Border */}
+            <div 
+              className="absolute inset-[-100%] animate-spin opacity-100" 
+              style={{ 
+                animationDuration: '10s',
+                backgroundImage: `conic-gradient(from 0deg at 50% 50%, transparent 0%, transparent 75%, #3b82f680 85%, #06b6d4 100%)` 
+              }}
+            />
+
+            <div className="relative bg-[#0a0a0a] rounded-[23px] p-8 border border-transparent h-full flex flex-col gap-8 z-10">
+              
+              {/* Availability */}
+              <div className="flex items-start gap-4">
+                <div className="mt-1 w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-green-400" />
                 </div>
-                <CardDescription>{contactInfo.sections.info.description[language]}</CardDescription>
-              </CardHeader>
-
-              <CardContent className="pt-6 space-y-8">
-                {/* Disponibilidad */}
-                <div className="bg-primary/5 rounded-lg p-4 border border-primary/10">
-                  <h3 className="font-medium mb-2 flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-primary" />
-                    {language === "en" ? "Availability" : "Disponibilidad"}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {language === "en"
-                      ? "I'm currently open to job opportunities, collaborations, or freelance work. I typically respond within 24 hours."
-                      : "Actualmente estoy disponible para oportunidades laborales, colaboraciones o trabajos freelance. Suelo responder en un plazo de 24 horas."}
-                  </p>
-                </div>
-
-                {/* Redes sociales */}
-                <div className="pt-4 border-t border-primary/10">
-                  <h3 className="font-medium mb-4">
-                    {contactInfo.sections.info.connect[language]}
-                  </h3>
-                  <div className="flex justify-center gap-4">
-                    {socialLinks.map(({ icon, url, label }) => {
-                      const Icon = iconMap[icon as keyof typeof iconMap]
-                      return (
-                        <motion.a
-                          key={label}
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-background/80 border border-primary/20 p-3 rounded-full hover:bg-primary/10 transition-colors"
-                          whileHover={{ y: -5, scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          aria-label={label}
-                        >
-                          <Icon className="h-5 w-5" />
-                        </motion.a>
-                      )
-                    })}
+                <div>
+                  <h4 className="text-white/90 font-bold text-lg mb-1">{language === "en" ? "Current Status" : "Estado Actual"}</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span className="text-white/60">
+                      {language === "en" ? "Available for new opportunities" : "Disponible para nuevas oportunidades"}
+                    </span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </motion.div>
-      </div>
+              </div>
+
+              {/* Location */}
+              <div className="flex items-start gap-4">
+                <div className="mt-1 w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <h4 className="text-white/90 font-bold text-lg mb-1">{language === "en" ? "Location" : "Ubicación"}</h4>
+                  <p className="text-white/60">Turrialba, Cartago, Costa Rica<br/>(Remote Worldwide)</p>
+                </div>
+              </div>
+
+              {/* Socials Grid */}
+              <div className="pt-6 border-t border-white/10">
+                <h4 className="text-white/90 font-bold text-lg mb-4">{language === "en" ? "Connect with me" : "Conecta conmigo"}</h4>
+                <div className="flex gap-3">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/5 border border-white/10 w-12 h-12 rounded-xl flex items-center justify-center text-white/70 hover:bg-white/10 hover:text-white hover:border-white/30 transition-all duration-300 hover:-translate-y-1"
+                      aria-label={link.label}
+                    >
+                      {link.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </motion.div>
     </div>
   )
 }

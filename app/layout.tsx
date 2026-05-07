@@ -44,7 +44,7 @@ export default function RootLayout({
       className={`${montserrat.variable} ${roboto.variable}`}
     >
       <body className={roboto.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false} disableTransitionOnChange>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
