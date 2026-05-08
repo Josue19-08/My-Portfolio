@@ -1,347 +1,212 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import { useLanguage } from "@/components/language/language-provider"
-import { motion, useInView, AnimatePresence } from "framer-motion"
-import { techStack } from "@/data/tech-stack"
-import { Code, Server, PenToolIcon as Tool, Zap, Cpu, Database, Globe, Layout, Layers, GitBranch } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { motion, useInView } from "framer-motion"
+import { 
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript, SiHtml5, SiRedux, SiFramer, SiIonic, SiAngular, SiBootstrap,
+  SiNodedotjs, SiFastify, SiExpress, SiSupabase, SiRust, SiSolidity, SiMongodb, SiPostgresql, SiGraphql, SiPrisma, SiDotnet, SiSpringboot, SiElasticsearch,
+  SiGit, SiDocker, SiGithubactions, SiJest, SiWebpack, SiFigma,
+  SiOpenai, SiClaude, SiGooglegemini, SiGithubcopilot
+} from "react-icons/si"
+import { FaJava, FaNetworkWired, FaAws, FaCss3Alt, FaRocket } from "react-icons/fa"
+import { BsBoxSeam, BsCursorFill } from "react-icons/bs"
+import { TbBrandVscode } from "react-icons/tb"
+
+const row1 = [
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
+  { name: "CSS3", icon: FaCss3Alt, color: "#1572B6" },
+  { name: "Redux", icon: SiRedux, color: "#764ABC" },
+  { name: "Framer Motion", icon: SiFramer, color: "#0055FF" },
+  { name: "Figma", icon: SiFigma, color: "#F24E1E" },
+  { name: "Angular", icon: SiAngular, color: "#DD0031" },
+  { name: "Ionic", icon: SiIonic, color: "#3880FF" },
+  { name: "Bootstrap", icon: SiBootstrap, color: "#7952B3" },
+]
+
+const row2 = [
+  { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  { name: "Supabase", icon: SiSupabase, color: "#3ECF8E" },
+  { name: "Docker", icon: SiDocker, color: "#2496ED" },
+  { name: "AWS", icon: FaAws, color: "#FF9900" },
+  { name: "Fastify", icon: SiFastify, color: "#ffffff" },
+  { name: "Express", icon: SiExpress, color: "#ffffff" },
+  { name: "GraphQL", icon: SiGraphql, color: "#E10098" },
+  { name: "Prisma", icon: SiPrisma, color: "#2D3748" },
+  { name: ".NET", icon: SiDotnet, color: "#512BD4" },
+  { name: "Java", icon: FaJava, color: "#007396" },
+  { name: "Spring Boot", icon: SiSpringboot, color: "#6DB33F" },
+  { name: "Elasticsearch", icon: SiElasticsearch, color: "#005571" },
+]
+
+const row3 = [
+  { name: "ChatGPT", icon: SiOpenai, color: "#10A37F" },
+  { name: "Claude Code", icon: SiClaude, color: "#D97757" },
+  { name: "Gemini", icon: SiGooglegemini, color: "#8E75B2" },
+  { name: "GitHub Copilot", icon: SiGithubcopilot, color: "#ffffff" },
+  { name: "OpenAI Codex", icon: SiOpenai, color: "#10A37F" },
+  { name: "Cursor", icon: BsCursorFill, color: "#ffffff" },
+  { name: "Antigravity", icon: FaRocket, color: "#FF4500" },
+  { name: "Rust", icon: SiRust, color: "#DEA584" },
+  { name: "Solidity", icon: SiSolidity, color: "#363636" },
+  { name: "Starknet / Cairo", icon: BsBoxSeam, color: "#FF4500" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
+  { name: "GitHub Actions", icon: SiGithubactions, color: "#2088FF" },
+  { name: "Webpack", icon: SiWebpack, color: "#8DD6F9" },
+  { name: "VS Code", icon: TbBrandVscode, color: "#007ACC" },
+]
 
 export function TechStack() {
   const { t, language } = useLanguage()
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { once: false, amount: 0.2 })
-
-  // Iconos para cada categoría
-  const categoryIcons = {
-    frontend: <Layout className="w-6 h-6" />,
-    backend: <Server className="w-6 h-6" />,
-    tools: <Tool className="w-6 h-6" />,
-  }
-
-  // Iconos para tecnologías específicas (podríamos expandir esto)
-  const techIcons: Record<string, JSX.Element> = {
-    React: <Code className="w-5 h-5 text-blue-400" />,
-    "Next.js": <Zap className="w-5 h-5 text-white" />,
-    TypeScript: <Code className="w-5 h-5 text-blue-500" />,
-    "Tailwind CSS": <Layout className="w-5 h-5 text-cyan-400" />,
-    "Node.js": <Server className="w-5 h-5 text-green-500" />,
-    Express: <Zap className="w-5 h-5 text-gray-400" />,
-    MongoDB: <Database className="w-5 h-5 text-green-400" />,
-    PostgreSQL: <Database className="w-5 h-5 text-blue-400" />,
-    Git: <GitBranch className="w-5 h-5 text-orange-500" />,
-    Docker: <Layers className="w-5 h-5 text-blue-500" />,
-    AWS: <Globe className="w-5 h-5 text-yellow-500" />,
-    "GitHub Actions": <GitBranch className="w-5 h-5 text-purple-400" />,
-    Fastify: <Zap className="w-5 h-5 text-white" />,
-    Supabase: <Database className="w-5 h-5 text-emerald-400" />,
-    Rust: <Code className="w-5 h-5 text-orange-600" />,
-    Solidity: <Code className="w-5 h-5 text-gray-400" />,
-    Cairo: <Code className="w-5 h-5 text-red-400" />,
-    "Starknet.js": <Code className="w-5 h-5 text-red-400" />,
-    "Stellar SDK": <Globe className="w-5 h-5 text-purple-400" />,
-  }
-
-  // Colores para cada categoría
-  const categoryColors = {
-    frontend: "from-blue-500 to-cyan-400",
-    backend: "from-green-500 to-emerald-400",
-    tools: "from-orange-500 to-amber-400",
-  }
-
-  // Variantes para animaciones
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  }
-
-  const handleCategoryClick = (category: string) => {
-    setActiveCategory(activeCategory === category ? null : category)
-  }
-
-  // Función para renderizar las tecnologías de una categoría
-  const renderTechItems = (category: keyof typeof techStack) => {
-    return (
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-        {techStack[category].map((tech, index) => (
-          <motion.div
-            key={tech.name}
-            variants={itemVariants}
-            whileHover={{ scale: 1.05, y: -5 }}
-            whileTap={{ scale: 0.98 }}
-            onMouseEnter={() => setHoveredTech(tech.name)}
-            onMouseLeave={() => setHoveredTech(null)}
-            className="relative"
-          >
-            <div
-              className={`
-                relative overflow-hidden rounded-xl border border-primary/20 
-                bg-background/50 backdrop-blur-lg p-5 h-full
-                transition-all duration-300 group
-                ${hoveredTech === tech.name ? "shadow-lg shadow-primary/20 border-primary/40" : ""}
-              `}
-            >
-              {/* Efecto de brillo en hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-full transition-all duration-1500 ease-in-out"></div>
-
-              {/* Contenido */}
-              <div className="flex items-start gap-4">
-                <div className="bg-gradient-to-br from-primary/20 to-primary/5 p-3 rounded-lg">
-                  {techIcons[tech.name] || <Cpu className="w-5 h-5 text-primary" />}
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-                    {tech.name}
-                    {tech.level >= 90 && (
-                      <Badge variant="outline" className="bg-primary/10 text-primary text-xs">
-                        Expert
-                      </Badge>
-                    )}
-                  </h3>
-
-                  {/* Barra de progreso con animación */}
-                  <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
-                    <motion.div
-                      className={`h-full rounded-full bg-gradient-to-r ${categoryColors[category]}`}
-                      initial={{ width: 0 }}
-                      animate={{ width: isInView ? `${tech.level}%` : 0 }}
-                      transition={{ duration: 1, delay: 0.2 + index * 0.1, ease: "easeOut" }}
-                    />
-                  </div>
-
-                  <div className="flex justify-between mt-2">
-                    <span className="text-xs text-muted-foreground">
-                      {language === "en" ? "Proficiency" : "Competencia"}
-                    </span>
-                    <span className="text-xs font-medium">{tech.level}%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    )
-  }
+  const isInView = useInView(containerRef, { once: true, amount: 0.1 })
 
   return (
-    <div className="container mx-auto" ref={containerRef}>
-      <div className="relative">
-        <div className="language-badge">{language.toUpperCase()}</div>
-        <h2 className="text-3xl font-bold mb-4 text-center">{t("techStack.title")}</h2>
-
-        {/* Descripción */}
-        <motion.p
-          className="text-center text-muted-foreground max-w-3xl mx-auto mb-12"
+    <div className="w-full relative overflow-hidden py-10" ref={containerRef}>
+      <div className="container mx-auto px-4 mb-16 flex flex-col items-center text-center">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          {language === "en"
-            ? "My technical toolkit spans across various domains, allowing me to build complete solutions from frontend to backend. Here's a breakdown of my expertise and proficiency levels."
-            : "Mi conjunto de herramientas técnicas abarca varios dominios, permitiéndome construir soluciones completas desde el frontend hasta el backend. Aquí hay un desglose de mi experiencia y niveles de competencia."}
-        </motion.p>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+            {t("techStack.title") || "Tech Stack"}
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary/50 to-primary mx-auto rounded-full mb-6" />
+          <p className="text-white/60 max-w-2xl text-lg mx-auto">
+            {language === "en"
+              ? "A robust ecosystem of technologies I use to architect, build, and deploy high-performance applications."
+              : "Un robusto ecosistema de tecnologías que utilizo para diseñar, construir y desplegar aplicaciones de alto rendimiento."}
+          </p>
+        </motion.div>
+      </div>
 
-        {/* Hexágono de tecnologías (efecto visual) */}
-        <div className="relative mb-16 hidden lg:block">
-          <motion.div
-            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"
-            initial={{ opacity: 0, scale: 0.8, rotate: -30 }}
-            animate={isInView ? { opacity: 0.15, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.8, rotate: -30 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-          >
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <polygon
-                points="50,3 100,28 100,72 50,97 0,72 0,28"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.5"
-                className="text-primary"
-              />
-              <polygon
-                points="50,15 85,32 85,68 50,85 15,68 15,32"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="0.3"
-                className="text-primary"
-              />
-            </svg>
-          </motion.div>
-        </div>
+      {/* Marquee Section */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="relative w-full flex flex-col gap-6 lg:gap-8 marquee-container"
+      >
+        {/* Gradient Overlays for Smooth Fade In/Out */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#050505] to-transparent z-10 hidden sm:block"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-[#050505] to-transparent z-10 hidden sm:block"></div>
 
-        {/* Categorías de tecnologías */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {(Object.keys(techStack) as Array<keyof typeof techStack>).map((category) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ y: -5 }}
-              onClick={() => handleCategoryClick(category)}
-              className="cursor-pointer"
+        {/* First Row: Scrolling Left */}
+        <div className="flex w-fit animate-scroll-left gap-4 md:gap-6 pr-4 md:pr-6">
+          {/* We repeat the array 3 times to ensure infinite seamless scrolling */}
+          {[...row1, ...row1, ...row1].map((tech, i) => (
+            <div 
+              key={`r1-${i}`} 
+              className="group relative p-[1px] rounded-2xl overflow-hidden cursor-default transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1"
             >
-              <div
-                className={`
-                  relative overflow-hidden rounded-xl border border-primary/20 
-                  bg-background/50 backdrop-blur-lg p-6 text-center
-                  transition-all duration-300
-                  ${activeCategory === category ? "border-primary shadow-lg shadow-primary/20" : ""}
-                `}
-              >
-                {/* Fondo animado */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-30"></div>
-
-                <div className="relative z-10">
-                  <div className="mx-auto w-16 h-16 flex items-center justify-center bg-gradient-to-br from-primary/20 to-transparent rounded-full mb-4">
-                    {categoryIcons[category]}
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-2 capitalize">
-                    {language === "en"
-                      ? category
-                      : category === "frontend"
-                        ? "Frontend"
-                        : category === "backend"
-                          ? "Backend"
-                          : "Herramientas"}
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {language === "en"
-                      ? `${techStack[category].length} technologies`
-                      : `${techStack[category].length} tecnologías`}
-                  </p>
-
-                  <div className="flex justify-center gap-1">
-                    {techStack[category].slice(0, 3).map((tech) => (
-                      <Badge key={tech.name} variant="outline" className="text-xs">
-                        {tech.name}
-                      </Badge>
-                    ))}
-                    {techStack[category].length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{techStack[category].length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
+              {/* Animated Magic Border */}
+              <div 
+                className="absolute inset-[-100%] animate-spin opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+                style={{ 
+                  animationDuration: '6s',
+                  backgroundImage: `conic-gradient(from 0deg at 50% 50%, transparent 0%, transparent 75%, ${tech.color}80 85%, ${tech.color} 100%)` 
+                }}
+              />
+              
+              <div className="relative flex items-center gap-3 px-6 py-4 bg-[#0a0a0a] border border-white/10 group-hover:border-transparent transition-all rounded-2xl h-full w-full backdrop-blur-sm">
+                <tech.icon 
+                  className="w-8 h-8 opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300 drop-shadow-md" 
+                  style={{ color: tech.color }} 
+                />
+                <span className="text-lg font-bold text-white/60 group-hover:text-white transition-all duration-300 whitespace-nowrap">
+                  {tech.name}
+                </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Tecnologías detalladas */}
-        <AnimatePresence mode="wait">
-          {activeCategory ? (
-            <motion.div
-              key={activeCategory}
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              exit={{ opacity: 0, y: -20 }}
-              className="mb-12"
+        {/* Second Row: Scrolling Right */}
+        <div className="flex w-fit animate-scroll-right gap-4 md:gap-6 pr-4 md:pr-6">
+          {[...row2, ...row2, ...row2].map((tech, i) => (
+            <div 
+              key={`r2-${i}`} 
+              className="group relative p-[1px] rounded-2xl overflow-hidden cursor-default transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1"
             >
-              <h3 className="text-2xl font-bold mb-6 text-center capitalize">
-                {language === "en"
-                  ? activeCategory
-                  : activeCategory === "frontend"
-                    ? "Frontend"
-                    : activeCategory === "backend"
-                      ? "Backend"
-                      : "Herramientas"}
-              </h3>
-
-              {renderTechItems(activeCategory as keyof typeof techStack)}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="all-tech"
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              exit={{ opacity: 0, y: -20 }}
-              className="mb-12"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {(Object.keys(techStack) as Array<keyof typeof techStack>).map((category) => (
-                  <div key={category} className="space-y-6">
-                    <h3 className="text-xl font-semibold text-center text-primary capitalize">
-                      {language === "en"
-                        ? category
-                        : category === "frontend"
-                          ? "Frontend"
-                          : category === "backend"
-                            ? "Backend"
-                            : "Herramientas"}
-                    </h3>
-
-                    {techStack[category].map((tech, index) => (
-                      <motion.div key={tech.name} variants={itemVariants} whileHover={{ scale: 1.03 }}>
-                        <div className="border border-primary/20 bg-background/50 backdrop-blur-sm rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                              {techIcons[tech.name] || <Cpu className="w-5 h-5 text-primary" />}
-                              <span className="font-medium">{tech.name}</span>
-                            </div>
-                            <span className="text-sm text-muted-foreground">{tech.level}%</span>
-                          </div>
-                          <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
-                            <motion.div
-                              className={`h-full rounded-full bg-gradient-to-r ${categoryColors[category]}`}
-                              initial={{ width: 0 }}
-                              animate={{ width: isInView ? `${tech.level}%` : 0 }}
-                              transition={{ duration: 1, delay: 0.2 + index * 0.1, ease: "easeOut" }}
-                            />
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                ))}
+              {/* Animated Magic Border */}
+              <div 
+                className="absolute inset-[-100%] animate-spin opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+                style={{ 
+                  animationDuration: '6s',
+                  backgroundImage: `conic-gradient(from 0deg at 50% 50%, transparent 0%, transparent 75%, ${tech.color}80 85%, ${tech.color} 100%)` 
+                }}
+              />
+              
+              <div className="relative flex items-center gap-3 px-6 py-4 bg-[#0a0a0a] border border-white/10 group-hover:border-transparent transition-all rounded-2xl h-full w-full backdrop-blur-sm">
+                <tech.icon 
+                  className="w-8 h-8 opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300 drop-shadow-md" 
+                  style={{ color: tech.color }} 
+                />
+                <span className="text-lg font-bold text-white/60 group-hover:text-white transition-all duration-300 whitespace-nowrap">
+                  {tech.name}
+                </span>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          ))}
+        </div>
 
-        {/* Llamado a la acción */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center"
+        {/* Third Row: Scrolling Left */}
+        <div className="flex w-fit animate-scroll-left gap-4 md:gap-6 pr-4 md:pr-6">
+          {[...row3, ...row3, ...row3].map((tech, i) => (
+            <div 
+              key={`r3-${i}`} 
+              className="group relative p-[1px] rounded-2xl overflow-hidden cursor-default transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1"
+            >
+              {/* Animated Magic Border */}
+              <div 
+                className="absolute inset-[-100%] animate-spin opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+                style={{ 
+                  animationDuration: '6s',
+                  backgroundImage: `conic-gradient(from 0deg at 50% 50%, transparent 0%, transparent 75%, ${tech.color}80 85%, ${tech.color} 100%)` 
+                }}
+              />
+              
+              <div className="relative flex items-center gap-3 px-6 py-4 bg-[#0a0a0a] border border-white/10 group-hover:border-transparent transition-all rounded-2xl h-full w-full backdrop-blur-sm">
+                <tech.icon 
+                  className="w-8 h-8 opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300 drop-shadow-md" 
+                  style={{ color: tech.color }} 
+                />
+                <span className="text-lg font-bold text-white/60 group-hover:text-white transition-all duration-300 whitespace-nowrap">
+                  {tech.name}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="mt-20 text-center container mx-auto px-4"
+      >
+        <button
+          onClick={() => {
+            const contactSection = document.getElementById("contact")
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: "smooth" })
+            }
+          }}
+          className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white font-medium hover:bg-white hover:text-black transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
         >
-          <p className="text-muted-foreground mb-4">
-            {language === "en"
-              ? "Interested in working together? Let's build something amazing!"
-              : "¿Interesado en trabajar juntos? ¡Construyamos algo increíble!"}
-          </p>
-          <button
-            onClick={() => {
-              const contactSection = document.getElementById("contact")
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: "smooth" })
-              }
-            }}
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
-          >
-            {language === "en" ? "Contact Me" : "Contáctame"}
-          </button>
-        </motion.div>
-      </div>
+          {language === "en" ? "Let's build something together" : "Construyamos algo juntos"}
+        </button>
+      </motion.div>
     </div>
   )
 }

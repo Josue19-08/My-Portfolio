@@ -1,291 +1,132 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { useLanguage } from "@/components/language/language-provider"
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { ChevronDown, Github, Linkedin, Twitter, Send, Phone, Code, ExternalLink } from "lucide-react"
-import Image from "next/image"
+import { Send, Phone, GithubIcon, LinkedinIcon, TwitterIcon, type LucideIcon } from "lucide-react"
 import { homeData } from "@/data/home"
+import { ParticleTextEffect } from "@/components/ui/particle-text-effect"
+import { InfiniteSlider } from "@/components/ui/infinite-slider"
+import { ProgressiveBlur } from "@/components/ui/progressive-blur"
+import { Terminal } from "@/components/ui/terminal"
+import { GafeteCard } from "@/components/ui/gafete-card"
+
+const iconMap: Record<string, LucideIcon> = {
+  github: GithubIcon,
+  linkedin: LinkedinIcon,
+  twitter: TwitterIcon,
+  send: Send,
+  phone: Phone,
+}
 
 export function Home() {
-  const { t, language } = useLanguage()
-  const [terminalText, setTerminalText] = useState("")
-  const [lineIndex, setLineIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [showCursor, setShowCursor] = useState(true)
-
-  const lines = [
-    t("home.terminal.line1"),
-    t("home.terminal.line2"),
-    t("home.terminal.line3"),
-    t("home.terminal.line4"),
-    t("home.terminal.line5"),
-  ]
-
-  useEffect(() => {
-    // Reset animation on language change
-    setTerminalText("")
-    setLineIndex(0)
-    setCharIndex(0)
-  }, [language])
-
-  useEffect(() => {
-    if (lineIndex < lines.length) {
-      const currentLine = lines[lineIndex]
-      if (charIndex < currentLine.length) {
-        const timer = setTimeout(() => {
-          setTerminalText((prev) => prev + currentLine[charIndex])
-          setCharIndex((prev) => prev + 1)
-        }, 50)
-        return () => clearTimeout(timer)
-      } else {
-        setTerminalText((prev) => prev + "\n")
-        setLineIndex((prev) => prev + 1)
-        setCharIndex(0)
-      }
-    }
-  }, [charIndex, lineIndex, lines])
-
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev)
-    }, 500)
-    return () => clearInterval(cursorInterval)
-  }, [])
-
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id)
-    if (section) section.scrollIntoView({ behavior: "smooth" })
-  }
-
-  const getIconComponent = (iconName: string) => {
-    switch (iconName) {
-      case "github":
-        return <Github className="w-5 h-5" />
-      case "linkedin":
-        return <Linkedin className="w-5 h-5" />
-      case "twitter":
-        return <Twitter className="w-5 h-5" />
-      case "send":
-        return <Send className="w-5 h-5" />
-      case "phone":
-        return <Phone className="w-5 h-5" />
-      default:
-        return <Github className="w-5 h-5" />
-    }
-  }
+  const [typingDone, setTypingDone] = useState(false)
 
   return (
-    <div className="relative w-full min-h-[90vh] flex flex-col justify-center">
-      {/* Luces */}
-      <div className="hero-glow absolute top-[10%] left-[15%] w-[300px] h-[300px] opacity-50"></div>
-      <div className="hero-glow orange absolute bottom-[20%] right-[15%] w-[250px] h-[250px] opacity-40"></div>
-      <div className="hero-glow blue absolute top-[40%] right-[25%] w-[200px] h-[200px] opacity-30"></div>
+    <section className="relative w-full h-screen flex flex-col overflow-hidden bg-black">
+      {/* Background */}
+      <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+        <ParticleTextEffect words={[
+          homeData.name.toUpperCase(),
+          "FULLSTACK DEV",
+          "BACKEND DEV",
+          "FRONTEND DEV",
+        ]} />
+      </div>
 
-      {/* Iconos decorativos */}
-      <motion.div
-        className="absolute top-[15%] left-[10%] text-primary/20 hidden lg:block"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1, duration: 0.8 }}
-      >
-        <Code size={80} />
-      </motion.div>
+      {/* Terminal + social buttons column */}
+      <div className="relative z-10 flex-1 flex items-center justify-center pt-20 px-4">
 
-      <motion.div
-        className="absolute bottom-[15%] right-[10%] text-primary/20 hidden lg:block"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-      >
-        <ExternalLink size={70} />
-      </motion.div>
-
-      <div className="container mx-auto px-4 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            className="flex flex-col items-center lg:items-start gap-8 order-2 lg:order-1"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Nombre + foto */}
-            <div className="flex items-center gap-6 mb-2">
-              <motion.div
-                initial={{ scale: 0, rotate: -20 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary to-secondary rounded-full blur-lg opacity-50 scale-110"></div>
-                <Image
-                  src={homeData.profileImage || "/placeholder.svg"}
-                  alt={homeData.name}
-                  width={120}
-                  height={120}
-                  className="rounded-full border-4 border-primary/30 object-cover z-10 relative"
-                />
-              </motion.div>
-              <div>
-                <motion.h1
-                  className="text-5xl md:text-7xl font-bold hero-title font-heading"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  {homeData.name}
-                </motion.h1>
-                <motion.h2
-                  className="text-2xl md:text-3xl text-primary hero-subtitle font-heading mt-2"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                  {homeData.subtitle[language]}
-                </motion.h2>
-              </div>
-            </div>
-
-            {/* Descripción + redes */}
-            <motion.p
-              className="text-xl text-muted-foreground text-center lg:text-left max-w-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              {homeData.description[language]}
-            </motion.p>
-
-            <motion.div
-              className="flex gap-4 mb-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
-              {homeData.socialLinks.map((link, index) => (
+        {/* Social buttons — vertical column to the left of the terminal */}
+        {typingDone && (
+          <div className="absolute flex flex-col gap-3" style={{ right: "calc(50% + 310px)" }}>
+            {homeData.socialLinks.map((link, i) => {
+              const Icon = iconMap[link.icon]
+              if (!Icon) return null
+              return (
                 <motion.a
-                  key={index}
+                  key={link.label}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-background/20 backdrop-blur-sm p-3 rounded-full hover:bg-primary/20 transition-colors border border-primary/30"
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.7 + 0.1 * index, duration: 0.3 }}
                   aria-label={link.label}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.12 }}
+                  className="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 bg-black/40 hover:bg-white/10 backdrop-blur-sm transition-colors"
                 >
-                  {getIconComponent(link.icon)}
+                  <Icon className="w-4 h-4 text-white/80" />
                 </motion.a>
-              ))}
-            </motion.div>
+              )
+            })}
+          </div>
+        )}
 
-            {/* Botones */}
-            <motion.div
-              className="flex gap-4 mt-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/80 text-white hero-button text-lg px-8 py-6"
-                onClick={() => scrollToSection("about")}
-              >
-                {homeData.buttons.about[language]}
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="hero-button text-lg px-8 py-6"
-                onClick={() => scrollToSection("projects")}
-              >
-                {homeData.buttons.projects[language]}
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          {/* Terminal animada */}
-          <motion.div
-            className="order-1 lg:order-2"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <div className="terminal w-full max-w-2xl mx-auto lg:ml-auto">
-  <div className="terminal-header">
-    <div className="terminal-button red"></div>
-    <div className="terminal-button yellow"></div>
-    <div className="terminal-button green"></div>
-  </div>
-  <div className="terminal-content min-h-[300px] overflow-x-auto px-4">
-    <pre className="whitespace-pre-wrap break-words">
-      {terminalText
-        .split("\n")
-        .map((line, i) => {
-          const clean = line.trim()
-          if (!clean) return null
-          return (
-            <div key={`line-${i}-${clean.slice(0, 10)}`} className="mb-2">
-              {i === 0 ? (
-                <span className="text-green-500">$ </span>
-              ) : (
-                <span className="text-green-500">&gt; </span>
-              )}
-              {line}
-              {lineIndex === i &&
-                charIndex === line.length &&
-                showCursor && <span className="cursor"></span>}
-            </div>
-          )
-        })}
-    </pre>
-  </div>
-</div>
-
-
-
-            <motion.div
-              className="flex justify-center mt-8 gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-            >
-              <div className="flex items-center gap-2 text-primary/70">
-                <Code size={20} />
-                <span className="text-sm font-mono">const developer = new Developer('Josué');</span>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
+        {/* Terminal — not moved */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="w-full max-w-xl"
+        >
+          <Terminal onComplete={() => setTypingDone(true)} />
+        </motion.div>
       </div>
 
-      {/* Scroll abajo */}
+      {/* Gafete */}
       <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.5,
-          delay: 1.5,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatType: "reverse",
-        }}
+        initial={{ opacity: 0, x: 80 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.9, delay: 0.2 }}
+        className="hidden lg:block absolute right-0 top-0 w-[55%] h-[calc(100%-80px)] z-50"
       >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-primary/70 text-sm">
-            {language === "en" ? "Scroll Down" : "Desplázate hacia abajo"}
-          </span>
-          <ChevronDown className="w-8 h-8 text-primary animate-bounce" />
-        </div>
+        <GafeteCard name={homeData.name} />
       </motion.div>
 
-      {/* Líneas decorativas */}
-      <div className="absolute left-0 top-1/4 w-1/3 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-      <div className="absolute right-0 bottom-1/4 w-1/3 h-px bg-gradient-to-l from-transparent via-primary/30 to-transparent"></div>
-    </div>
+      {/* Tech Stack */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className="relative z-30 w-full pb-5"
+      >
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col items-center md:flex-row">
+            <div className="md:max-w-44 md:border-r md:border-white/20 md:pr-6 mb-4 md:mb-0">
+              <p className="text-end text-sm text-gray-400 uppercase tracking-widest font-semibold">Tech Stack</p>
+            </div>
+            <div className="relative py-4 md:w-[calc(100%-11rem)] overflow-hidden">
+              <InfiniteSlider durationOnHover={20} duration={40} gap={112}>
+                <div className="flex items-center gap-2">
+                  <img className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" />
+                  <span className="text-white font-medium text-lg tracking-wide hidden sm:block">React</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg" alt=".NET" />
+                  <span className="text-white font-medium text-lg tracking-wide hidden sm:block">.NET</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" />
+                  <span className="text-white font-medium text-lg tracking-wide hidden sm:block">Java</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="Spring Boot" />
+                  <span className="text-white font-medium text-lg tracking-wide hidden sm:block">Spring Boot</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="TypeScript" />
+                  <span className="text-white font-medium text-lg tracking-wide hidden sm:block">TypeScript</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" />
+                  <span className="text-white font-medium text-lg tracking-wide hidden sm:block">Node.js</span>
+                </div>
+              </InfiniteSlider>
+              <ProgressiveBlur className="pointer-events-none absolute left-0 top-0 h-full w-20 z-10" direction="left" blurIntensity={1} />
+              <ProgressiveBlur className="pointer-events-none absolute right-0 top-0 h-full w-20 z-10" direction="right" blurIntensity={1} />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </section>
   )
 }

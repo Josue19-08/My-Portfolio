@@ -367,5 +367,52 @@ export const contributions: Contribution[] = [
     status: "merged",
     url: "https://github.com/SkillCert/frontend/pull/19",
   },
-  
+  {
+    id: "contrib23",
+    project: "Boundless Bounties",
+    repo: "boundlessfi/bounties",
+    title: {
+      en: "Implement live wallet balance and asset management",
+      es: "Implementar balance de wallet en vivo y gestión de activos",
+    },
+    description: {
+      en: "Replaced mock data with real Stellar network integration, implementing live wallet balance, asset management, and escrow summary.",
+      es: "Se reemplazó la data simulada con integración real de la red Stellar, implementando balance de wallet en vivo, gestión de activos y resumen de escrow.",
+    },
+    prNumber: "#179",
+    status: "merged",
+    url: "https://github.com/boundlessfi/bounties/pull/179",
+  },
+  {
+    id: "contrib24",
+    project: "Boundless Bounties",
+    repo: "boundlessfi/bounties",
+    title: {
+      en: "Generate TypeScript bindings for Soroban smart contracts",
+      es: "Generar bindings de TypeScript para contratos inteligentes de Soroban",
+    },
+    description: {
+      en: "Added TypeScript client bindings for Soroban contracts and integrated stellar-sdk to enable frontend read-only on-chain interactions.",
+      es: "Se añadieron bindings de TypeScript para los contratos de Soroban y se integró stellar-sdk para permitir interacciones de lectura en cadena desde el frontend.",
+    },
+    prNumber: "#168",
+    status: "merged",
+    url: "https://github.com/boundlessfi/bounties/pull/168",
+  },
+  {
+    id: "contrib25",
+    project: "Boundless Bounties",
+    repo: "boundlessfi/bounties",
+    title: {
+      en: "Add bounty details page with GitHub integration",
+      es: "Agregar página de detalles de recompensa con integración de GitHub",
+    },
+    description: {
+      en: "Implemented comprehensive bounty details page, added TypeScript domain types, and created reusable components for bounty status and headers.",
+      es: "Se implementó una página completa de detalles de recompensas, se agregaron tipos de dominio en TypeScript y se crearon componentes reutilizables para el estado y los encabezados.",
+    },
+    prNumber: "#9",
+    status: "merged",
+    url: "https://github.com/boundlessfi/bounties/pull/9",
+  }
 ]

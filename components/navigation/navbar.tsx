@@ -1,91 +1,99 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { LanguageToggle } from "@/components/language/language-toggle"
+import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/components/language/language-provider"
+import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { useLanguage } from "../language/language-provider"
-import { ThemeToggle } from "../theme/theme-toggle"
-import { LanguageToggle } from "../language/language-toggle"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion, AnimatePresence } from "framer-motion"
+
+const navItems = [
+  { id: "home",         key: "nav.home" },
+  { id: "projects",     key: "nav.projects" },
+  { id: "contributions",key: "nav.contributions" },
+  { id: "tech-stack",   key: "nav.techStack" },
+  { id: "about",        key: "nav.about" },
+  { id: "contact",      key: "nav.contact" },
+]
 
 export function Navbar() {
   const { t } = useLanguage()
-  const [isAtTop, setIsAtTop] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
+  const [activeSection, setActiveSection] = useState("home")
   useEffect(() => {
     const handleScroll = () => {
-      // Solo mostrar el navbar cuando estamos en la sección home (parte superior)
-      if (window.scrollY < window.innerHeight * 0.5) {
-        setIsAtTop(true)
-      } else {
-        setIsAtTop(false)
+      const currentScrollPos = window.scrollY
+      const sections = navItems.map((item) => document.getElementById(item.id))
+      const scrollPosition = currentScrollPos + 300
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i]
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(navItems[i].id)
+          break
+        }
       }
     }
 
     window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
     setIsMobileMenuOpen(false)
+    const section = document.getElementById(id)
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" })
+    }
   }
-
-  const navItems = [
-    { id: "home", label: t("nav.home") },
-    { id: "projects", label: t("nav.projects") },
-    { id: "contributions", label: t("nav.contributions") },
-    { id: "tech-stack", label: t("nav.techStack") },
-    { id: "about", label: t("nav.about") },
-    { id: "timeline", label: t("nav.timeline") },
-    { id: "contact", label: t("nav.contact") },
-  ]
-
-  if (!isAtTop) return null
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md shadow-md transition-all duration-300">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center">
-              <Image src="/images/logo.png" alt="Josué Araya Logo" width={40} height={40} className="mr-2" />
-            </Link>
+      <header
+        className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[100] w-[95%] md:w-auto md:min-w-[800px]"
+      >
+        <div
+          className="flex items-center justify-between md:justify-center gap-4 md:gap-8 px-6 py-4 rounded-[2rem] transition-all duration-300 bg-black/20 backdrop-blur-xl"
+        >
+          <Link href="/" className="flex shrink-0 items-center transform transition-transform duration-300 hover:scale-110">
+            <Image src="/images/logo.png" alt="Josué Araya Logo" width={36} height={36} className="mr-2" />
+          </Link>
 
-            <div className="hidden md:flex items-center space-x-6">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-sm font-medium hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="hidden md:flex items-center gap-2">
-                <ThemeToggle />
-                <LanguageToggle />
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          <nav className="hidden md:flex items-center gap-2">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`relative px-4 py-2 rounded-full font-medium text-sm transition-colors duration-300 whitespace-nowrap ${
+                  activeSection === item.id ? "text-white" : "text-gray-400 hover:text-gray-200"
+                }`}
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </Button>
+                {activeSection === item.id && (
+                  <motion.div
+                    layoutId="active-nav"
+                    className="absolute inset-0 bg-white/10 rounded-full border border-white/20"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <span className="relative z-10">{t(item.key)}</span>
+              </button>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-2">
+              <LanguageToggle />
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden text-white hover:bg-white/10 transition-colors rounded-xl"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
           </div>
         </div>
       </header>
@@ -93,25 +101,26 @@ export function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed top-16 left-0 right-0 bg-background/95 backdrop-blur-md z-40 border-b border-border md:hidden"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed top-24 left-4 right-4 bg-background/95 backdrop-blur-2xl z-40 border border-white/10 rounded-3xl shadow-2xl md:hidden overflow-hidden"
           >
-            <div className="container mx-auto px-4 py-4">
-              <div className="flex flex-col space-y-4">
+            <div className="px-6 py-8">
+              <div className="flex flex-col space-y-2">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="py-2 text-sm font-medium hover:text-primary transition-colors"
+                    className={`px-4 py-3 text-base font-medium rounded-xl transition-colors text-left ${
+                      activeSection === item.id ? "bg-white/10 text-white" : "text-gray-400 hover:text-white hover:bg-white/5"
+                    }`}
                   >
-                    {item.label}
+                    {t(item.key)}
                   </button>
                 ))}
-                <div className="flex items-center gap-2 pt-2 border-t border-border">
-                  <ThemeToggle />
+                <div className="flex items-center justify-center gap-4 pt-6 mt-4 border-t border-white/10">
                   <LanguageToggle />
                 </div>
               </div>
