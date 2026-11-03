@@ -30,13 +30,13 @@ export function Projects() {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const getProjectImage = (project: any) => {
-    if (project.id === "aqua-stark") {
-      return project.image || "/placeholder.svg"
+    if (project.image) {
+      return `/${project.image}`
     }
     if (project.demo) {
       return `https://api.microlink.io/?url=${encodeURIComponent(project.demo)}&screenshot=true&meta=false&embed=screenshot.url`
     }
-    return project.image || "/placeholder.svg"
+    return "/placeholder.svg"
   }
 
   return (
@@ -92,7 +92,7 @@ export function Projects() {
                     loading="lazy"
                     onError={(e) => {
                       // Fallback if screenshot fails
-                      e.currentTarget.src = project.image || "/placeholder.svg"
+                      e.currentTarget.src = "/placeholder.svg"
                     }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10" />

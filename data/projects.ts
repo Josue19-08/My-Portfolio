@@ -27,6 +27,21 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "writz",
+    title: {
+      en: "Writz Protocol - Bitcoin Lending on Stellar",
+      es: "Writz Protocol - Préstamos de Bitcoin en Stellar",
+    },
+    description: {
+      en: "Bitcoin lending protocol on Stellar where the collateral never leaves Bitcoin. Lock native BTC in a P2WSH script, borrow USDC on Soroban, and reclaim your BTC alone via a CLTV timelock. No bridge, no custodian, no wrapped tokens.",
+      es: "Protocolo de préstamos de Bitcoin sobre Stellar donde el colateral nunca sale de Bitcoin. Bloquea BTC nativo en un script P2WSH, pide prestado USDC en Soroban y recupera tu BTC por tu cuenta mediante un timelock CLTV. Sin puentes, sin custodios, sin tokens envueltos.",
+    },
+    technologies: ["Stellar", "Soroban", "Rust", "Bitcoin", "Next.js", "TypeScript", "Circom", "Zero-Knowledge"],
+    github: "https://github.com/WritzProtocol/writz",
+    demo: "https://writz.xyz",
+    image: "images/writz-banner.png",
+  },
+  {
     id: "aiva",
     title: {
       en: "AIVA - AI Networking Platform",
@@ -40,7 +55,7 @@ export const projects: Project[] = [
     github: "",
     githubLocked: true,
     demo: "https://aiva-platform.vercel.app",
-    image: "",
+    image: "images/aiva.png",
   },
   {
     id: "offer-hub-payments",
@@ -55,7 +70,7 @@ export const projects: Project[] = [
     technologies: ["Stellar", "REST API", "Microservices", "Next.js", "TypeScript"],
     github: "https://github.com/OFFER-HUB/offer-hub",
     demo: "https://offer-hub.tech",
-    image: "images/offer-hub-banner.png",
+    image: "images/offer-hub-payments.png",
   },
   {
     id: "offer-hub-freelance",
@@ -70,23 +85,7 @@ export const projects: Project[] = [
     technologies: ["Stellar", "Next.js", "TypeScript", "TailwindCSS"],
     github: "https://github.com/OFFER-HUB/offer-hub",
     demo: "https://offer-hub.org",
-    image: "images/offer-hub-banner.png", 
-  },
-  {
-    id: "super-sentinel",
-    title: {
-      en: "SuperSentinel - Trust Intelligence for Autonomous Agents",
-      es: "SuperSentinel - Inteligencia de Confianza para Agentes Autónomos",
-    },
-    description: {
-      en: "Enterprise-grade trust intelligence platform for autonomous agents. It provides real-time compliance, adversarial defense against logic-bomb attacks, and intent verification for over 500+ enterprise nodes across multiple blockchains.",
-      es: "Plataforma empresarial de inteligencia de confianza para agentes autónomos. Proporciona cumplimiento en tiempo real, defensa contra ataques adversarios y verificación de intenciones para más de 500 nodos empresariales en múltiples blockchains.",
-    },
-    technologies: ["Next.js", "TypeScript", "Avalanche", "Chainlink", "Ethereum", "Solana"],
-    github: "",
-    githubLocked: true,
-    demo: "https://super-sentinel-2.vercel.app",
-    image: "",
+    image: "images/offer-hub-freelance.png", 
   },
   {
     id: "aura",
@@ -102,7 +101,7 @@ export const projects: Project[] = [
     github: "",
     githubLocked: true,
     demo: "https://aura-coral-seven.vercel.app",
-    image: "",
+    image: "images/aura.png",
   },
   {
     id: "metered-x402",
@@ -118,7 +117,7 @@ export const projects: Project[] = [
     github: "",
     githubLocked: true,
     demo: "https://x402-virid.vercel.app",
-    image: "",
+    image: "images/metered-x402.png",
   },
   {
     id: "flowe",
@@ -134,7 +133,7 @@ export const projects: Project[] = [
     github: "",
     githubLocked: true,
     demo: "https://useflowe.com",
-    image: "",
+    image: "images/flowe.png",
   },
   {
     id: "neumorfismo-dark-mode",
@@ -150,7 +149,7 @@ export const projects: Project[] = [
     github: "",
     githubLocked: true,
     demo: "https://v0-neumorphism-dark-mode.vercel.app",
-    image: "",
+    image: "images/neumorfismo-dark-mode.png",
   },
   {
     id: "zylith",
@@ -180,8 +179,8 @@ export const projects: Project[] = [
     technologies: ["Next.js", "TypeScript", "TailwindCSS"],
     github: "",
     githubLocked: true,
-    demo: "https://catalogo-papeleria-19.vercel.app",
-    image: "",
+    demo: "https://www.diecinueveart.shop",
+    image: "images/catalogo-papeleria.png",
   },
   {
     id: "galaxy-smart-wallet",
